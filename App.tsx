@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
 import { INITIAL_CATEGORIES, INITIAL_ANNOUNCEMENTS } from './constants';
+import type { StylePoint } from './types';
 import { Category, SalonStyle, ViewLevel, Announcement } from './types';
+
+
 import { Button } from './components/Button';
 import { AddModal } from './components/AddModal';
 import { generateStyleSuggestion } from './services/geminiService';
-import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Bell, Megaphone, Search, History, Clock } from 'lucide-react';
+import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Megaphone, Search, History, Clock } from 'lucide-react';
 
 // --- VISUAL HELPERS ---
 const getGradientClass = (id: string, intensity: 'light' | 'medium' | 'dark' = 'light') => {
@@ -151,12 +155,20 @@ const App: React.FC = () => {
       } else if (currentLevel === 'STYLE_LIST' && selectedCategory) {
         // Add Style
         let description = '詳細情報はまだありません。';
-        let points = [];
+       let points: StylePoint[] = [];
+
+
+
 
         if (isAutoGenerate) {
           const generated = await generateStyleSuggestion(name, selectedCategory.title);
           description = generated.description;
-          points = generated.points;
+          points = (generated.points ?? []).map((p: any, i: number) => ({
+  id: `pt-${Date.now()}-${i}`,
+  title: typeof p === "string" ? p : (p.title ?? `Point ${i + 1}`),
+  description: typeof p === "string" ? "" : (p.description ?? ""),
+}));
+
         }
 
         const newStyle: SalonStyle = {
