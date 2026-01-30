@@ -1,14 +1,29 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { GeminiModel, StylePoint } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+const apiKey = process.env.API_KEY;
+
+const ai = apiKey
+  ? new GoogleGenAI({ apiKey })
+  : null;
+
 
 interface GeneratedStyleData {
   description: string;
   points: StylePoint[];
 }
 
-export const generateStyleSuggestion = async (styleName: string, categoryTitle: string): Promise<GeneratedStyleData> => {
+export const generateStyleSuggestion = async (
+  styleName: string,
+  categoryTitle: string
+): Promise<GeneratedStyleData> => {
+  if (!ai) {
+    return {
+      description: "公開版ではAI生成は無効です",
+      points: []
+    };
+  }
+
   try {
     const prompt = `
       美容師向けオンラインサロンのコンテンツを作成しています。
