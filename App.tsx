@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { INITIAL_CATEGORIES, INITIAL_ANNOUNCEMENTS } from './constants';
 import { Category, SalonStyle, ViewLevel, Announcement, StylePoint } from './types';
 import { Button } from './components/Button';
 import { AddModal } from './components/AddModal';
 import { generateStyleSuggestion } from './services/geminiService';
-import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Bell, Megaphone, Search, History, Clock } from 'lucide-react';
+import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Megaphone, Search, History, Clock } from 'lucide-react';
 
 // --- VISUAL HELPERS ---
 const getGradientClass = (id: string, intensity: 'light' | 'medium' | 'dark' = 'light') => {
