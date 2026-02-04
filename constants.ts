@@ -2,6 +2,12 @@ import { Category, Announcement } from './types';
 
 export const INITIAL_ANNOUNCEMENTS: Announcement[] = [
   {
+    id: 'news-ribic',
+    title: '【NBA ✖️リビックコラボ📣】理美容用品の通販『Ribi a Ribi（リビアリビ）』が松田隼人と特別コラボ✨✨',
+    date: '2024.03.24',
+    link: 'https://fants.jp/feeds/920097?openExternalBrowser=1'
+  },
+  {
     id: 'news-1',
     title: '春のトレンド：レイヤーカットの新しい解釈について解説動画を追加しました',
     date: '2024.03.20',
