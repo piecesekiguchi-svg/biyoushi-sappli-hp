@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-
 import { INITIAL_CATEGORIES, INITIAL_ANNOUNCEMENTS } from './constants';
-import type { StylePoint } from './types';
-import { Category, SalonStyle, ViewLevel, Announcement } from './types';
-
-
+import { Category, SalonStyle, ViewLevel, Announcement, StylePoint } from './types';
 import { Button } from './components/Button';
 import { AddModal } from './components/AddModal';
 import { generateStyleSuggestion } from './services/geminiService';
@@ -155,20 +151,17 @@ const App: React.FC = () => {
       } else if (currentLevel === 'STYLE_LIST' && selectedCategory) {
         // Add Style
         let description = '詳細情報はまだありません。';
-       let points: StylePoint[] = [];
-
-
-
+        let points: StylePoint[] = [];
 
         if (isAutoGenerate) {
           const generated = await generateStyleSuggestion(name, selectedCategory.title);
           description = generated.description;
+          // Map to ensure data integrity and avoid runtime crashes if AI hallucinates format
           points = (generated.points ?? []).map((p: any, i: number) => ({
-  id: `pt-${Date.now()}-${i}`,
-  title: typeof p === "string" ? p : (p.title ?? `Point ${i + 1}`),
-  description: typeof p === "string" ? "" : (p.description ?? ""),
-}));
-
+            id: `pt-${Date.now()}-${i}`,
+            title: typeof p === "string" ? p : (p.title ?? `Point ${i + 1}`),
+            description: typeof p === "string" ? "" : (p.description ?? ""),
+          }));
         }
 
         const newStyle: SalonStyle = {
@@ -331,7 +324,11 @@ const App: React.FC = () => {
        {/* Carousel Container - Full bleed on mobile with horizontal scroll */}
        <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 -mx-4 px-4 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {announcements.map((ann) => (
-             <div key={ann.id} className="snap-center shrink-0 w-[280px] md:w-[300px] flex flex-col group cursor-pointer">
+             <div 
+                key={ann.id} 
+                onClick={() => ann.link && window.open(ann.link, '_blank', 'noopener,noreferrer')}
+                className="snap-center shrink-0 w-[280px] md:w-[300px] flex flex-col group cursor-pointer"
+             >
                 {/* Image Area - Distinctly smaller/different aspect ratio than main cards */}
                 <div className={`relative h-36 w-full rounded-lg overflow-hidden mb-3 shadow-sm border border-gray-100 ${!ann.imageUrl ? getGradientClass(ann.id, 'medium') : ''}`}>
                    {ann.imageUrl && (
@@ -350,7 +347,7 @@ const App: React.FC = () => {
                 {/* Text Area */}
                 <div className="px-1">
                    <span className="text-[10px] text-gray-400 tracking-wider block mb-1.5 font-medium">{ann.date}</span>
-                   <h4 className="text-sm font-medium text-salon-black leading-relaxed line-clamp-2 group-hover:text-salon-accent transition-colors font-sans">
+                   <h4 className="text-sm font-medium text-salon-black leading-relaxed line-clamp-2 group-hover:text-salon-accent transition-colors font-sans whitespace-pre-line">
                       {ann.title}
                    </h4>
                 </div>
