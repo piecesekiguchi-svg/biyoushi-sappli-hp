@@ -18,6 +18,7 @@ export interface SalonStyle {
   description: string;
   points: StylePoint[];
   lessons?: Lesson[];
+  date?: string; // YYYY.MM.DD format for sorting latest updates
 }
 
 export interface Category {

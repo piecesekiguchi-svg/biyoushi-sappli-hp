@@ -43,10 +43,21 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '全てのデザインの基礎となるカット理論と、ハサミ・コームの扱い方など、美容師としての土台を作る必須カリキュラム。',
     styles: [
       {
+        id: 'design-reading',
+        name: 'デザインの読み解き方',
+        description: 'スタイル写真から構造を理解し、展開図に落とし込むための分析力を養う講義。',
+        externalUrl: 'https://fants.jp/feeds/833145?openExternalBrowser=1',
+        date: '2024.03.25',
+        points: [
+           { id: 'p1', title: '構造分析', description: 'アウトライン、ウェイト、レイヤーの入り方を視覚的に分解する。' }
+        ]
+      },
+      {
         id: 'blocking-concept',
         name: 'ブロッキングの考え方',
         description: 'デザインを正確に作るためのセクション分けとスライスの基礎理論。',
         externalUrl: 'https://fants.jp/feeds/593952?openExternalBrowser=1',
+        date: '2023.12.01',
         points: [
           { id: 'p1', title: '骨格の理解', description: '頭の丸みや生え癖を理解し、展開図通りのセクションを取る。' }
         ]
@@ -56,6 +67,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         name: 'コームを正しく持つための指の体操',
         description: 'コーム操作の基礎となる、指の独立した動きと柔軟性を養うトレーニング。',
         externalUrl: 'https://fants.jp/feeds/1084383?openExternalBrowser=1',
+        date: '2024.01.15',
         points: [
           { id: 'p1', title: '指の独立性', description: '小指・薬指・中指・人差し指がそれぞれ独立して動く感覚を養う。' },
           { id: 'p2', title: 'グリップの安定', description: 'コームを持ち替える際も、支点となる指がブレないように意識する。' }
@@ -66,6 +78,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         name: 'シザーを持つ右手の体操',
         description: '開閉の安定性を高め、腱鞘炎を防ぐための右手のエクササイズ。',
         externalUrl: 'https://fants.jp/feeds/1084406?openExternalBrowser=1',
+        date: '2024.01.15',
         points: [
            { id: 'p1', title: '静刃の固定', description: '親指以外の4本の指で静刃を完全に固定し、動刃のみを動かす感覚を掴む。' }
         ]
@@ -75,6 +88,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         name: 'パネルを持つ左手の体操',
         description: '正確なスライスとテンション管理のための左手トレーニング。',
         externalUrl: 'https://fants.jp/feeds/1084410?openExternalBrowser=1',
+        date: '2024.01.16',
         points: [
            { id: 'p1', title: '指の密着', description: '指の間に隙間ができないようにし、パネルに対して均一なテンションをかける。' }
         ]
@@ -84,6 +98,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         name: 'シザーワークの体操',
         description: 'リズムと正確性を養うシザー開閉の実践的トレーニング。',
         externalUrl: 'https://fants.jp/feeds/1084421?openExternalBrowser=1',
+        date: '2024.01.17',
         points: [
            { id: 'p1', title: '開閉のリズム', description: '一定のリズムで開閉を行い、手首の角度が変わらないように注意する。' }
         ]
@@ -93,17 +108,9 @@ export const INITIAL_CATEGORIES: Category[] = [
         name: 'コームワークの体操',
         description: 'スムーズな持ち替えとシェイプを行うためのコーム操作練習。',
         externalUrl: 'https://fants.jp/feeds/1084425?openExternalBrowser=1',
+        date: '2024.01.18',
         points: [
            { id: 'p1', title: '回転動作', description: '指先を使ってコームをスムーズに回転させ、シェイプからカットへの移行を円滑にする。' }
-        ]
-      },
-      {
-        id: 'design-reading',
-        name: 'デザインの読み解き方',
-        description: 'スタイル写真から構造を理解し、展開図に落とし込むための分析力を養う講義。',
-        externalUrl: 'https://fants.jp/feeds/833145?openExternalBrowser=1',
-        points: [
-           { id: 'p1', title: '構造分析', description: 'アウトライン、ウェイト、レイヤーの入り方を視覚的に分解する。' }
         ]
       }
     ]
@@ -118,6 +125,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'one-length',
         name: 'ワンレングス',
         description: '最も基本となる水平ラインの作り方。姿勢・目線・テンション管理の基礎を学ぶ。',
+        date: '2023.12.10',
         points: [
            { id: 'p1', title: '姿勢と目線', description: 'カットラインの真正面に体を置き、目線をラインの高さに合わせる。' },
            { id: 'p2', title: 'ノーテンション', description: '髪の自然な落ち位置で切るため、コーミング時のテンションをかけない。' }
@@ -132,6 +140,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'soto-hane-bob',
         name: '外ハネボブ',
         description: 'トレンド感のある切りっぱなし質感と、再現性の高い外ハネラインの構成。',
+        date: '2024.02.01',
         points: [
            { id: 'p1', title: '長さ設定', description: '肩に当たって自然にハネる位置を見極め、計算して長さを設定する。' }
         ],
@@ -144,6 +153,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'graduation-bob',
         name: 'グラデーションボブ',
         description: '丸みと重さのバランスで作る、女性らしいシルエットとウェイトコントロール。',
+        date: '2023.12.15',
         points: [
            { id: 'p1', title: 'パネルの引き出し角度', description: '各パネルを45度に引き出し、グラデーションの幅を一定に保つ。' },
            { id: 'p2', title: 'コーナーチェック', description: 'パネルを展開図と逆方向に引き出し、不要な角を取り除く。' }
@@ -159,6 +169,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'insta-short',
         name: 'インスタショート',
         description: 'SNS映えする束感とシルエットを意識したショート。',
+        date: '2024.01.20',
         points: [
           { id: 'p1', title: '束感の形成', description: 'スタイリング剤をつけた時に動きが出やすいように、間引くセニングを入れる。' }
         ],
@@ -177,6 +188,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'soto-hane-medium',
         name: '外ハネミディアム',
         description: '鎖骨レングスで作る、抜け感のあるミディアムスタイル。',
+        date: '2024.01.25',
         points: [
            { id: 'p1', title: '鎖骨レングス', description: '肩に当たって跳ねる長さを利用し、自然な外ハネを作る。' }
         ],
@@ -193,6 +205,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         name: 'グラボブショート',
         description: '襟足をタイトに収め、後頭部の丸みを強調するショートスタイル。',
         externalUrl: '',
+        date: '2023.11.01',
         points: []
       },
       {
@@ -200,6 +213,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         name: 'バングなしレイヤー',
         description: '大人っぽさと動きを表現する、顔周りのリバース毛流れ。',
         externalUrl: '',
+        date: '2023.11.05',
         points: []
       },
       {
@@ -207,6 +221,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         name: 'バングありレイヤー',
         description: '小顔効果と可愛らしさを引き出す、前髪とレイヤーのつながり。',
         externalUrl: '',
+        date: '2023.11.10',
         points: []
       },
       {
@@ -214,6 +229,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         name: 'レイヤー解体新書',
         description: '感覚ではなく理論で理解する、レイヤーの仕組みと構造。',
         externalUrl: '',
+        date: '2023.11.15',
         points: []
       },
       {
@@ -221,6 +237,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         name: '１３５°レイヤー',
         description: 'ハイレイヤーで軽さと動きを最大限に出すテクニック。',
         externalUrl: '',
+        date: '2023.11.20',
         points: []
       },
       {
@@ -228,6 +245,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         name: 'ハンサムマッシュ',
         description: 'クールさとジェンダーレスな魅力を併せ持つマッシュスタイル。',
         externalUrl: '',
+        date: '2023.11.25',
         points: []
       }
     ]
@@ -242,6 +260,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'texture-master-short',
         name: '質感マスターショート',
         description: '骨格に合わせたベースカットと、スライドカットによる質感調整で再現性を高めるショートスタイル。',
+        date: '2024.02.10',
         points: [
           { id: 'p1', title: '骨格診断', description: 'お客様の頭の形を把握し、どこにボリュームを残し、どこを削るかを設計する。' },
           { id: 'p2', title: 'スライドカット', description: '毛束の中間から毛先にかけて滑らせるようにハサミを入れ、柔らかな動きを作る。' }
@@ -261,6 +280,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'kubire-layer',
         name: 'くびれレイヤー',
         description: 'トレンドのくびれシルエットを作るレイヤーテクニックと、顔まわりの似合わせを徹底解説。',
+        date: '2023.12.20',
         points: [
           { id: 'p1', title: 'ウェイト位置', description: 'くびれを作るために、トップのボリュームとアンダーの軽さのバランスを調整する。' },
           { id: 'p2', title: '顔まわりのリバース', description: 'アイロンワークを想定した、流れやすいレイヤーを入れる。' }
@@ -278,6 +298,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'advance-long',
         name: 'アドバンスロング',
         description: 'ロングヘアにおけるデザインの考え方と展開図の理解を深める理論講座。',
+        date: '2023.12.25',
         points: [
           { id: 'p1', title: '展開図の理解', description: 'ロングヘアの重さと動きをコントロールするための構造的理解。' }
         ],
@@ -293,6 +314,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'bangs-master',
         name: '前髪カット徹底攻略',
         description: '印象を大きく左右する前髪のデザインロジック。リフトや奥行きによる変化を学ぶ。',
+        date: '2024.01.05',
         points: [
           { id: 'p1', title: 'リフトコントロール', description: 'パネルを引き上げる角度によって、前髪の軽さと流れを調整する。' },
           { id: 'p2', title: '奥行き設定', description: '前髪の厚みを決める奥行きの取り方と、それに伴う印象操作。' }
@@ -308,6 +330,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'short-straightening',
         name: 'ショート×縮毛デザイン',
         description: '縮毛矯正毛に対するショートカットのアプローチ。仮切りと本切りのプロセス。',
+        date: '2024.03.10',
         points: [
           { id: 'p1', title: '仮切り', description: '縮毛矯正前に大まかな長さを切り、薬液塗布の効率を上げる。' },
           { id: 'p2', title: '本切り', description: '矯正後の髪の落ち位置を確認しながら、精密なラインを作る。' }
@@ -321,6 +344,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'lift-layer',
         name: 'リフトレイヤー',
         description: 'リフトアップ効果と軽さを出すレイヤースタイル。',
+        date: '2024.03.15',
         points: [
            { id: 'p1', title: 'トップの動き', description: 'トップにレイヤーを入れ、ふんわりとした高さを出す。' }
         ],
@@ -333,6 +357,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'slide-cut-basic',
         name: 'スライドカットの基本',
         description: '質感調整の要となるスライドカットの基礎技術。レングス別の実践テクニック。',
+        date: '2024.03.20',
         points: [
           { id: 'p1', title: 'シザーの滑らせ方', description: '髪の表面を傷つけないよう、刃の入れ方とスピードをコントロールする。' }
         ],
@@ -354,6 +379,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'special-gray-hair',
         name: '【NOOS代表　岩屋 真氏】スペシャル白髪ぼかしセミナー',
         description: '白髪を隠すのではなく活かす、次世代のグレイカラー提案。',
+        date: '2024.03.22',
         points: [
            { id: 'p1', title: 'ハイライトの設計', description: '白髪の生え方に合わせた効果的なハイライトの配置。' }
         ],
@@ -365,6 +391,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'cut-battle-2024',
         name: '【アルテマ｜志賀代表】【BELO｜島原GO氏】カットバトルセミナー',
         description: '業界トップランナーたちによるリアルカットバトル。技術と感性の真剣勝負。',
+        date: '2024.02.25',
         points: [
           { id: 'p1', title: 'スピードと精度', description: '限られた時間内で最高のクオリティを出すための仕事運び。' }
         ],
@@ -378,6 +405,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'butterfly-layer',
         name: '【JEWIL｜佐藤優真氏】バタフライレイヤー',
         description: '顔まわりの華やかな動きとくびれ感が特徴の韓国風レイヤースタイル。',
+        date: '2024.02.20',
         points: [
           { id: 'p1', title: '顔まわりの構成', description: '独立したレイヤーで作る、リバースの流れとボリューム感。' }
         ],
@@ -392,6 +420,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         id: 'adhesion-bob',
         name: '【カット教育の第一人者｜枝村仁氏】密着BOBベーシック',
         description: '究極のフィット感を生み出すボブカットの理論と実践。',
+        date: '2024.02.15',
         points: [
           { id: 'p1', title: 'インナーグラデーション', description: '内側の髪を短くし、自然と内に入るラインを作る。' }
         ],
@@ -417,6 +446,7 @@ export const INITIAL_CATEGORIES: Category[] = [
         name: '指名100万への道',
         description: '技術だけでない、人間力の磨き方。',
         externalUrl: 'https://example.com/blog/mindset',
+        date: '2024.01.01',
         points: [
           { id: 'p1', title: '挨拶の重要性', description: '全てのコミュニケーションは最初の3秒で決まる。' }
         ]

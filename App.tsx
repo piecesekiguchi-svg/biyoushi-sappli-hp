@@ -4,7 +4,7 @@ import { Category, SalonStyle, ViewLevel, Announcement, StylePoint } from './typ
 import { Button } from './components/Button';
 import { AddModal } from './components/AddModal';
 import { generateStyleSuggestion } from './services/geminiService';
-import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Megaphone, Search, History, Clock } from 'lucide-react';
+import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Megaphone, Search, History, Clock, Calendar } from 'lucide-react';
 
 // --- VISUAL HELPERS ---
 const getGradientClass = (id: string, intensity: 'light' | 'medium' | 'dark' = 'light') => {
@@ -45,17 +45,24 @@ const App: React.FC = () => {
   // State
   const [categories, setCategories] = useState<Category[]>(() => {
     // Initialize with LATEST UPDATES category
-    // Gather "latest" items from ALL categories (taking the last 2 items from each)
-    const latestStyles = INITIAL_CATEGORIES.flatMap(category => {
-      // Slice the last 2 items (assuming they are the newest) and reverse to show newest first
-      return [...category.styles].slice(-2).reverse();
+    // Logic: Flatten all styles, sort by date descending, take top 8
+    
+    const allStyles = INITIAL_CATEGORIES.flatMap(category => category.styles);
+    
+    const sortedStyles = allStyles.sort((a, b) => {
+      // Assuming date format 'YYYY.MM.DD'
+      const dateA = a.date ? new Date(a.date.replace(/\./g, '-')).getTime() : 0;
+      const dateB = b.date ? new Date(b.date.replace(/\./g, '-')).getTime() : 0;
+      return dateB - dateA; // Descending order
     });
+
+    const latestStyles = sortedStyles.slice(0, 8);
     
     const latestCategory: Category = {
       id: 'latest-updates',
       title: 'LATEST UPDATES',
       subtitle: '最新の動画',
-      description: '全カテゴリーの中から更新された最新のコンテンツをピックアップ。',
+      description: '全カテゴリーの中から更新日順に最新のコンテンツを表示しています。',
       styles: latestStyles
     };
     
@@ -108,7 +115,7 @@ const App: React.FC = () => {
     });
 
     // Special handling for CORE PHASE: Treat as direct links (2-level structure)
-    // We need to check if the current selectedCategory is core-phase OR if the style belongs to core-phase (when accessed from history/search)
+    // We need to check if the current selectedCategory is core-phase OR if the style belongs to core-phase (when accessed from history/search/latest)
     const isCorePhase = selectedCategory?.id === 'core-phase' || categories.find(c => c.id === 'core-phase')?.styles.some(s => s.id === style.id);
 
     if (isCorePhase) {
@@ -120,9 +127,9 @@ const App: React.FC = () => {
       return;
     }
 
-    // If coming from My Page or Search, we might need to set the category context
-    if (!selectedCategory) {
-      const parentCategory = categories.find(c => c.styles.some(s => s.id === style.id));
+    // If coming from My Page or Search or Latest, we might need to set the category context
+    if (!selectedCategory || selectedCategory.id === 'latest-updates') {
+      const parentCategory = INITIAL_CATEGORIES.find(c => c.styles.some(s => s.id === style.id));
       if (parentCategory) {
         setSelectedCategory(parentCategory);
       }
@@ -165,6 +172,8 @@ const App: React.FC = () => {
           }));
         }
 
+        const currentDate = new Date().toISOString().split('T')[0].replace(/-/g, '.');
+
         const newStyle: SalonStyle = {
           id: `style-${Date.now()}`,
           name: name,
@@ -172,6 +181,7 @@ const App: React.FC = () => {
           externalUrl: 'https://example.com',
           points: points,
           imageUrl: imageUrl || undefined,
+          date: currentDate,
         };
 
         const updatedCategories = categories.map(cat => {
@@ -181,7 +191,14 @@ const App: React.FC = () => {
           }
           // Update Latest (Prepend new style to LATEST UPDATES)
           if (cat.id === 'latest-updates') {
-            return { ...cat, styles: [newStyle, ...cat.styles] };
+             // Re-sort latest updates including the new one
+             const allStyles = [...categories.flatMap(c => c.id !== 'latest-updates' ? c.styles : []), newStyle];
+             const sorted = allStyles.sort((a, b) => {
+               const dateA = a.date ? new Date(a.date.replace(/\./g, '-')).getTime() : 0;
+               const dateB = b.date ? new Date(b.date.replace(/\./g, '-')).getTime() : 0;
+               return dateB - dateA;
+             });
+             return { ...cat, styles: sorted.slice(0, 8) };
           }
           return cat;
         });
@@ -189,8 +206,9 @@ const App: React.FC = () => {
         setCategories(updatedCategories);
         
         // Update currently selected category reference as well
-        // Note: If we are in 'charisma', just appending works fine, shuffle happens on next entry
-        setSelectedCategory({ ...selectedCategory, styles: [...selectedCategory.styles, newStyle] });
+        if (selectedCategory.id !== 'latest-updates') {
+           setSelectedCategory({ ...selectedCategory, styles: [...selectedCategory.styles, newStyle] });
+        }
       }
     } catch (e) {
       console.error(e);
@@ -508,7 +526,15 @@ const App: React.FC = () => {
                       </span>
                     )}
                   </h3>
-                  <p className="text-xs text-gray-400 mt-1 line-clamp-1 tracking-wide">{style.description}</p>
+                  <div className="flex items-center gap-2 mt-1">
+                     {style.date && (
+                        <span className="text-[10px] text-salon-accent font-medium flex items-center gap-1">
+                           <Calendar size={10} />
+                           {style.date}
+                        </span>
+                     )}
+                     <p className="text-xs text-gray-400 line-clamp-1 tracking-wide">{style.description}</p>
+                  </div>
                 </div>
               </div>
               
@@ -552,9 +578,17 @@ const App: React.FC = () => {
         )}
 
         <div className="max-w-2xl relative z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-white/90 text-[10px] font-medium tracking-[0.2em] mb-8 backdrop-blur-sm border border-white/10 uppercase">
-            <Video size={10} />
-            <span>Video Lesson</span>
+          <div className="flex items-center justify-center gap-3 mb-8">
+             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 text-white/90 text-[10px] font-medium tracking-[0.2em] backdrop-blur-sm border border-white/10 uppercase">
+               <Video size={10} />
+               <span>Video Lesson</span>
+             </div>
+             {selectedStyle?.date && (
+               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-salon-accent/80 text-white text-[10px] font-medium tracking-[0.1em] backdrop-blur-sm">
+                  <Calendar size={10} />
+                  <span>{selectedStyle.date} Update</span>
+               </div>
+             )}
           </div>
           <h1 className="text-3xl md:text-5xl font-serif text-white mb-6 leading-normal tracking-wide">{selectedStyle?.name}</h1>
           <p className="text-gray-200 text-lg font-light leading-relaxed opacity-90 tracking-wide">{selectedStyle?.description}</p>
