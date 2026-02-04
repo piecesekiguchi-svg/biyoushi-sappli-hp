@@ -45,17 +45,18 @@ const App: React.FC = () => {
   // State
   const [categories, setCategories] = useState<Category[]>(() => {
     // Initialize with LATEST UPDATES category
-    // Gather some initial "latest" items (for demo, just grab the first few from various categories)
-    const initialLatestStyles = INITIAL_CATEGORIES
-      .flatMap(c => c.styles)
-      .slice(0, 5); // Take first 5 as "latest" initially
+    // Gather "latest" items from ALL categories (taking the last 2 items from each)
+    const latestStyles = INITIAL_CATEGORIES.flatMap(category => {
+      // Slice the last 2 items (assuming they are the newest) and reverse to show newest first
+      return [...category.styles].slice(-2).reverse();
+    });
     
     const latestCategory: Category = {
       id: 'latest-updates',
       title: 'LATEST UPDATES',
       subtitle: '最新の動画',
       description: '全カテゴリーの中から更新された最新のコンテンツをピックアップ。',
-      styles: initialLatestStyles
+      styles: latestStyles
     };
     
     return [latestCategory, ...INITIAL_CATEGORIES];
