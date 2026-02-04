@@ -376,6 +376,22 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '業界を牽引する特別講師による、撮影技術やブランディングを含めた総合セミナー。',
     styles: [
       {
+        id: 'perm-wolf-layer',
+        name: '【シザーズリーグ四天王｜近藤 連太郎氏】苦手克服パーマ！ウルフレイヤー',
+        description: 'パーマスタイルに苦手意識がある方必見。ウルフレイヤーとパーマの連動性を学ぶ実践的セミナー。',
+        date: '2024.03.26',
+        points: [
+           { id: 'p1', title: 'パーマとカットの連動', description: 'カールの動きを計算に入れたベースカットと質感調整。' }
+        ],
+        lessons: [
+          { id: 'l1', title: 'ベースカット', url: 'https://fants.jp/feeds/713413?openExternalBrowser=1' },
+          { id: 'l2', title: '質感調整・レイヤー', url: 'https://fants.jp/feeds/715733?openExternalBrowser=1' },
+          { id: 'l3', title: 'ワインディング', url: 'https://fants.jp/feeds/716584?openExternalBrowser=1' },
+          { id: 'l4', title: 'チェック', url: 'https://fants.jp/feeds/718708?openExternalBrowser=1' },
+          { id: 'l5', title: 'フィニッシュ', url: 'https://fants.jp/feeds/718709?openExternalBrowser=1' },
+        ]
+      },
+      {
         id: 'special-gray-hair',
         name: '【NOOS代表　岩屋 真氏】スペシャル白髪ぼかしセミナー',
         description: '白髪を隠すのではなく活かす、次世代のグレイカラー提案。',
