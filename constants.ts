@@ -3,7 +3,11 @@ import { Category, Announcement } from './types';
 export const INITIAL_ANNOUNCEMENTS: Announcement[] = [
   {
     id: 'news-ribic',
-    title: '【NBA ✖️リビックコラボ📣】理美容用品の通販『Ribi a Ribi（リビアリビ）』が松田隼人と特別コラボ✨✨',
+    title: `【理美容品の特別価格】
+
+理美容用品の通販
+『Ribi a Ribi（リビアリビ）』が
+松田隼人と特別コラボ✨✨`,
     date: '2024.03.24',
     link: 'https://fants.jp/feeds/920097?openExternalBrowser=1'
   },
@@ -91,6 +95,15 @@ export const INITIAL_CATEGORIES: Category[] = [
         externalUrl: 'https://fants.jp/feeds/1084425?openExternalBrowser=1',
         points: [
            { id: 'p1', title: '回転動作', description: '指先を使ってコームをスムーズに回転させ、シェイプからカットへの移行を円滑にする。' }
+        ]
+      },
+      {
+        id: 'design-reading',
+        name: 'デザインの読み解き方',
+        description: 'スタイル写真から構造を理解し、展開図に落とし込むための分析力を養う講義。',
+        externalUrl: 'https://fants.jp/feeds/833145?openExternalBrowser=1',
+        points: [
+           { id: 'p1', title: '構造分析', description: 'アウトライン、ウェイト、レイヤーの入り方を視覚的に分解する。' }
         ]
       }
     ]
