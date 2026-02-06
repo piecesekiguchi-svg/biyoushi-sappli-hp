@@ -33,7 +33,7 @@ export interface Category {
 export interface Announcement {
   id: string;
   title: string;
-  date: string;
+  date?: string;
   imageUrl?: string;
   link?: string;
 }

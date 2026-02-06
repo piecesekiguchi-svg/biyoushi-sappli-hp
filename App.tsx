@@ -4,7 +4,7 @@ import { Category, SalonStyle, ViewLevel, Announcement, StylePoint } from './typ
 import { Button } from './components/Button';
 import { AddModal } from './components/AddModal';
 import { generateStyleSuggestion } from './services/geminiService';
-import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Megaphone, Search, History, Clock, Calendar } from 'lucide-react';
+import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Search, History, Clock, Calendar } from 'lucide-react';
 
 // --- VISUAL HELPERS ---
 const getGradientClass = (id: string, intensity: 'light' | 'medium' | 'dark' = 'light') => {
@@ -333,46 +333,30 @@ const App: React.FC = () => {
     );
   };
 
-  const AnnouncementCarousel = () => (
-    <div className="mb-12 animate-in fade-in slide-in-from-top-4 duration-700">
-       <div className="flex items-center gap-2 mb-4 px-1">
-          <div className="w-1.5 h-1.5 rounded-full bg-salon-accent animate-pulse"></div>
-          <h3 className="text-xs font-bold tracking-widest text-salon-gray uppercase">News & Topics</h3>
+  const NewsSection = () => (
+    <div className="mb-10 animate-in fade-in slide-in-from-top-4 duration-700 bg-white border border-gray-100 rounded-lg p-5 shadow-sm">
+       <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
+          <h3 className="text-sm font-bold tracking-widest text-salon-black uppercase font-serif flex items-center gap-2">
+            <span className="w-1 h-4 bg-salon-accent rounded-full"></span>
+            News & Topics
+          </h3>
+          <span className="text-[10px] text-gray-400 cursor-pointer hover:text-salon-black transition-colors">一覧を見る</span>
        </div>
        
-       {/* Carousel Container - Full bleed on mobile with horizontal scroll */}
-       <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 -mx-4 px-4 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+       <ul className="divide-y divide-gray-100">
           {announcements.map((ann) => (
-             <div 
+             <li 
                 key={ann.id} 
                 onClick={() => ann.link && window.open(ann.link, '_blank', 'noopener,noreferrer')}
-                className="snap-center shrink-0 w-[280px] md:w-[300px] flex flex-col group cursor-pointer"
+                className={`py-3 group flex items-center gap-3 ${ann.link ? 'cursor-pointer hover:bg-gray-50 -mx-2 px-2 rounded transition-colors' : ''}`}
              >
-                {/* Image Area - Distinctly smaller/different aspect ratio than main cards */}
-                <div className={`relative h-36 w-full rounded-lg overflow-hidden mb-3 shadow-sm border border-gray-100 ${!ann.imageUrl ? getGradientClass(ann.id, 'medium') : ''}`}>
-                   {ann.imageUrl && (
-                      <img src={ann.imageUrl} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                   )}
-                   {!ann.imageUrl && (
-                      <div className="absolute inset-0 flex items-center justify-center text-salon-black/30">
-                         <Megaphone size={24} strokeWidth={1.5} />
-                      </div>
-                   )}
-                   <div className="absolute top-2 left-2 bg-white/95 backdrop-blur-sm px-2.5 py-1 rounded text-[9px] font-bold tracking-widest text-salon-black uppercase shadow-sm">
-                      News
-                   </div>
-                </div>
-                
-                {/* Text Area */}
-                <div className="px-1">
-                   <span className="text-[10px] text-gray-400 tracking-wider block mb-1.5 font-medium">{ann.date}</span>
-                   <h4 className="text-sm font-medium text-salon-black leading-relaxed line-clamp-2 group-hover:text-salon-accent transition-colors font-sans whitespace-pre-line">
-                      {ann.title}
-                   </h4>
-                </div>
-             </div>
+                <ChevronRight size={12} className="text-salon-accent flex-shrink-0" />
+                <p className="text-sm text-salon-black group-hover:text-salon-dark transition-colors line-clamp-1 leading-relaxed flex-1 font-medium">
+                   {ann.title.replace(/\n/g, ' ')}
+                </p>
+             </li>
           ))}
-       </div>
+       </ul>
     </div>
   );
 
@@ -410,7 +394,7 @@ const App: React.FC = () => {
   // VIEW 1: Categories
   const CategoryListView = () => (
     <>
-      <AnnouncementCarousel />
+      <NewsSection />
       
       <div className="flex items-center gap-2 mb-6 px-1">
          <h3 className="text-xs font-bold tracking-widest text-salon-gray uppercase">Contents</h3>

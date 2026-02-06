@@ -2,36 +2,14 @@ import { Category, Announcement } from './types';
 
 export const INITIAL_ANNOUNCEMENTS: Announcement[] = [
   {
+    id: 'news-hikari',
+    title: '【サプリ会員限定！光シザー特別価格】',
+    link: 'https://fants.jp/feeds/618673?openExternalBrowser=1'
+  },
+  {
     id: 'news-ribic',
-    title: `【理美容品の特別価格】
-
-理美容用品の通販
-『Ribi a Ribi（リビアリビ）』が
-松田隼人と特別コラボ✨✨`,
-    date: '2024.03.24',
+    title: '【理美容品の特別価格】理美容用品の通販『Ribi a Ribi』コラボ',
     link: 'https://fants.jp/feeds/920097?openExternalBrowser=1'
-  },
-  {
-    id: 'news-1',
-    title: '春のトレンド：レイヤーカットの新しい解釈について解説動画を追加しました',
-    date: '2024.03.20',
-    imageUrl: 'https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&auto=format&fit=crop'
-  },
-  {
-    id: 'news-2',
-    title: '【重要】システムメンテナンスのお知らせ（3/25 深夜2:00〜）',
-    date: '2024.03.18',
-  },
-  {
-    id: 'news-3',
-    title: 'カリスマ美容師による「インスタ集客」特別セミナー開催決定！',
-    date: '2024.03.15',
-    imageUrl: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop'
-  },
-  {
-    id: 'news-4',
-    title: '新しい参加メンバーが増えました！コミュニティで挨拶しましょう',
-    date: '2024.03.10',
   }
 ];
 
