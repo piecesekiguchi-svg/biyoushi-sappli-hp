@@ -376,6 +376,24 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '業界を牽引する特別講師による、撮影技術やブランディングを含めた総合セミナー。',
     styles: [
       {
+        id: 'hair-quality-improvement-adachi',
+        name: '【２時間で終わる髪質改善｜美髪大学 安達 瞭氏】',
+        description: '短時間で高単価を実現する髪質改善の理論と工程。効率的な薬剤選定とワークフロー。',
+        date: '2024.03.28',
+        points: [
+           { id: 'p1', title: 'タイムパフォーマンス', description: '通常3時間以上かかる工程を2時間で終わらせるための効率化と薬剤選定。' }
+        ],
+        lessons: [
+          { id: 'l1', title: '毛髪診断', url: 'https://fants.jp/feeds/690600?openExternalBrowser=1' },
+          { id: 'l2', title: '一液塗布', url: 'https://fants.jp/feeds/690604?openExternalBrowser=1' },
+          { id: 'l3', title: '中間水洗', url: 'https://fants.jp/feeds/690607?openExternalBrowser=1' },
+          { id: 'l4', title: 'ドライ', url: 'https://fants.jp/feeds/690610?openExternalBrowser=1' },
+          { id: 'l5', title: 'アイロンワーク', url: 'https://fants.jp/feeds/690615?openExternalBrowser=1' },
+          { id: 'l6', title: '２液塗布', url: 'https://fants.jp/feeds/690617?openExternalBrowser=1' },
+          { id: 'l7', title: 'ドライ・仕上がり', url: 'https://fants.jp/feeds/690619?openExternalBrowser=1' },
+        ]
+      },
+      {
         id: 'belo-texture-makeup',
         name: '【BELO｜島原GO氏】一撃質感メイク',
         description: '短時間で劇的に変わる質感調整のテクニック。サロンワークで即戦力となる島原流の魔法。',
