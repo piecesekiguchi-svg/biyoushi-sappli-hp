@@ -4,7 +4,7 @@ import { Category, SalonStyle, ViewLevel, Announcement, StylePoint } from './typ
 import { Button } from './components/Button';
 import { AddModal } from './components/AddModal';
 import { generateStyleSuggestion } from './services/geminiService';
-import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Search, History, Clock, Calendar } from 'lucide-react';
+import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Search, History, Clock, Calendar, MessageCircle } from 'lucide-react';
 
 // --- VISUAL HELPERS ---
 const getGradientClass = (id: string, intensity: 'light' | 'medium' | 'dark' = 'light') => {
@@ -45,9 +45,11 @@ const App: React.FC = () => {
   // State
   const [categories, setCategories] = useState<Category[]>(() => {
     // Initialize with LATEST UPDATES category
-    // Logic: Flatten all styles, sort by date descending, take top 8
+    // Logic: Flatten all styles excluding 'izakaya', sort by date descending, take top 8
     
-    const allStyles = INITIAL_CATEGORIES.flatMap(category => category.styles);
+    const allStyles = INITIAL_CATEGORIES
+      .filter(category => category.id !== 'izakaya')
+      .flatMap(category => category.styles);
     
     const sortedStyles = allStyles.sort((a, b) => {
       // Assuming date format 'YYYY.MM.DD'
@@ -62,7 +64,7 @@ const App: React.FC = () => {
       id: 'latest-updates',
       title: 'LATEST UPDATES',
       subtitle: '最新の動画',
-      description: '全カテゴリーの中から更新日順に最新のコンテンツを表示しています。',
+      description: '全カテゴリー（居酒屋セキグチを除く）の中から更新日順に最新のコンテンツを表示しています。',
       styles: latestStyles
     };
     
@@ -191,8 +193,12 @@ const App: React.FC = () => {
           }
           // Update Latest (Prepend new style to LATEST UPDATES)
           if (cat.id === 'latest-updates') {
-             // Re-sort latest updates including the new one
-             const allStyles = [...categories.flatMap(c => c.id !== 'latest-updates' ? c.styles : []), newStyle];
+             // Re-sort latest updates including the new one, excluding 'izakaya'
+             const allStyles = [...categories
+                .filter(c => c.id !== 'latest-updates' && c.id !== 'izakaya')
+                .flatMap(c => c.styles), 
+                newStyle
+             ];
              const sorted = allStyles.sort((a, b) => {
                const dateA = a.date ? new Date(a.date.replace(/\./g, '-')).getTime() : 0;
                const dateB = b.date ? new Date(b.date.replace(/\./g, '-')).getTime() : 0;
@@ -324,7 +330,6 @@ const App: React.FC = () => {
                 >
                   MY PAGE
                 </button>
-                <button className="w-full text-left px-3 py-2 text-gray-600 hover:text-black hover:bg-white/50 rounded-lg transition-colors">COMMUNITY</button>
               </>
             )}
           </div>
@@ -708,7 +713,7 @@ const App: React.FC = () => {
             <p className="text-gray-500 text-xs tracking-[0.3em] uppercase">History & Records</p>
         </div>
 
-        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6 md:p-8">
+        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6 md:p-8 mb-8">
             <div className="flex items-center gap-2 mb-6 border-b border-gray-100 pb-4">
                 <History size={20} className="text-salon-accent" />
                 <h2 className="text-lg font-medium text-salon-black tracking-wide">アクセス履歴</h2>
@@ -741,6 +746,29 @@ const App: React.FC = () => {
                 </div>
             )}
         </div>
+
+        <a 
+          href="https://lin.ee/ePKpXeq" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="block bg-gradient-to-r from-[#06C755] to-[#05b64d] rounded-lg p-6 shadow-sm hover:shadow-md transition-all group"
+        >
+            <div className="flex items-center justify-between text-white">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                        <MessageCircle size={24} fill="currentColor" className="text-white" />
+                    </div>
+                    <div>
+                        <h3 className="font-bold text-lg tracking-widest mb-1">OFFICIAL LINE</h3>
+                        <p className="text-xs opacity-90 tracking-wide">公式LINEで最新情報をチェック</p>
+                    </div>
+                </div>
+                <div className="bg-white/20 px-4 py-2 rounded-full text-xs font-bold tracking-widest group-hover:bg-white/30 transition-colors flex items-center gap-2">
+                    友だち追加
+                    <ChevronRight size={14} />
+                </div>
+            </div>
+        </a>
     </div>
   );
 
@@ -772,7 +800,6 @@ const App: React.FC = () => {
              </button>
              <div className="hidden md:flex items-center gap-10 text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase">
                <button onClick={() => setCurrentLevel('MY_PAGE')} className={`hover:text-salon-black transition-colors ${currentLevel === 'MY_PAGE' ? 'text-salon-black' : ''}`}>My Page</button>
-               <a href="#" className="hover:text-salon-black transition-colors">Community</a>
                <span className="w-px h-3 bg-gray-200"></span>
                <button className="text-salon-black hover:text-salon-accent transition-colors">Log Out</button>
              </div>
