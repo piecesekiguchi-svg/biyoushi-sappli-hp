@@ -4,7 +4,7 @@ import { Category, SalonStyle, ViewLevel, Announcement, StylePoint } from './typ
 import { Button } from './components/Button';
 import { AddModal } from './components/AddModal';
 import { generateStyleSuggestion } from './services/geminiService';
-import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Search, History, Clock, Calendar, MessageCircle } from 'lucide-react';
+import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Search, History, Clock, Calendar } from 'lucide-react';
 
 // --- VISUAL HELPERS ---
 const getGradientClass = (id: string, intensity: 'light' | 'medium' | 'dark' = 'light') => {
@@ -330,6 +330,14 @@ const App: React.FC = () => {
                 >
                   MY PAGE
                 </button>
+                <a 
+                  href="https://lin.ee/ePKpXeq"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-left px-3 py-2 text-gray-600 hover:text-black hover:bg-white/50 rounded-lg transition-colors"
+                >
+                  OFFICIAL LINE
+                </a>
               </>
             )}
           </div>
@@ -746,29 +754,6 @@ const App: React.FC = () => {
                 </div>
             )}
         </div>
-
-        <a 
-          href="https://lin.ee/ePKpXeq" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="block bg-gradient-to-r from-[#06C755] to-[#05b64d] rounded-lg p-6 shadow-sm hover:shadow-md transition-all group"
-        >
-            <div className="flex items-center justify-between text-white">
-                <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
-                        <MessageCircle size={24} fill="currentColor" className="text-white" />
-                    </div>
-                    <div>
-                        <h3 className="font-bold text-lg tracking-widest mb-1">OFFICIAL LINE</h3>
-                        <p className="text-xs opacity-90 tracking-wide">公式LINEで最新情報をチェック</p>
-                    </div>
-                </div>
-                <div className="bg-white/20 px-4 py-2 rounded-full text-xs font-bold tracking-widest group-hover:bg-white/30 transition-colors flex items-center gap-2">
-                    友だち追加
-                    <ChevronRight size={14} />
-                </div>
-            </div>
-        </a>
     </div>
   );
 
