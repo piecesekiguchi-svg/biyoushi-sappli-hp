@@ -376,6 +376,20 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '業界を牽引する特別講師による、撮影技術やブランディングを含めた総合セミナー。',
     styles: [
       {
+        id: 'belo-texture-makeup',
+        name: '【BELO｜島原GO氏】一撃質感メイク',
+        description: '短時間で劇的に変わる質感調整のテクニック。サロンワークで即戦力となる島原流の魔法。',
+        date: '2024.03.27',
+        points: [
+           { id: 'p1', title: '一撃のインパクト', description: '最小の手数で最大の効果を生む、効率的かつ劇的な質感調整。' }
+        ],
+        lessons: [
+          { id: 'l1', title: 'ベースカット', url: 'https://fants.jp/feeds/704924?openExternalBrowser=1' },
+          { id: 'l2', title: '質感調整', url: 'https://fants.jp/feeds/704935?openExternalBrowser=1' },
+          { id: 'l3', title: 'フィニッシュ', url: 'https://fants.jp/feeds/704954?openExternalBrowser=1' },
+        ]
+      },
+      {
         id: 'perm-wolf-layer',
         name: '【シザーズリーグ四天王｜近藤 連太郎氏】苦手克服パーマ！ウルフレイヤー',
         description: 'パーマスタイルに苦手意識がある方必見。ウルフレイヤーとパーマの連動性を学ぶ実践的セミナー。',
