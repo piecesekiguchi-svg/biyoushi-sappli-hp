@@ -376,6 +376,23 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '業界を牽引する特別講師による、撮影技術やブランディングを含めた総合セミナー。',
     styles: [
       {
+        id: 'royal-road-layer-matsuura',
+        name: '【王道レイヤー｜kumu代表 松浦ふうま 氏】',
+        description: '誰からも愛される王道レイヤーの決定版。ベースカットの正確性から、質感を高めるスタイリング、撮影テクニックまでを網羅。',
+        date: '2024.03.29',
+        points: [
+           { id: 'p1', title: '顔まわりの似合わせ', description: '骨格を補正し、小顔効果を最大限に引き出す顔まわりのレイヤー設計。' }
+        ],
+        lessons: [
+          { id: 'l1', title: 'ベースカット', url: 'https://fants.jp/feeds/610164?openExternalBrowser=1' },
+          { id: 'l2', title: '右サイドの注意点', url: 'https://fants.jp/feeds/611688?openExternalBrowser=1' },
+          { id: 'l3', title: '質感調整', url: 'https://fants.jp/feeds/613828?openExternalBrowser=1' },
+          { id: 'l4', title: '前髪・顔まわり', url: 'https://fants.jp/feeds/613830?openExternalBrowser=1' },
+          { id: 'l5', title: 'スタイリング・撮影', url: 'https://fants.jp/feeds/615166?openExternalBrowser=1' },
+          { id: 'l6', title: 'スタイリング２・撮影', url: 'https://fants.jp/feeds/615194?openExternalBrowser=1' },
+        ]
+      },
+      {
         id: 'hair-quality-improvement-adachi',
         name: '【２時間で終わる髪質改善｜美髪大学 安達 瞭氏】',
         description: '短時間で高単価を実現する髪質改善の理論と工程。効率的な薬剤選定とワークフロー。',
