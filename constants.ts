@@ -354,6 +354,24 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '業界を牽引する特別講師による、撮影技術やブランディングを含めた総合セミナー。',
     styles: [
       {
+        id: 'magic-layer-wataru',
+        name: '【インスタフォロワー41.2万人｜cache cache代表 わたるマジック 氏】可愛いを叶えるマジックレイヤー',
+        description: '圧倒的なフォロワー数を誇るわたるマジック氏による、"絶対に可愛くなれる"レイヤーカットの極意。SNSで映えるシルエット作りから撮影テクニックまで。',
+        date: '2026.02.06',
+        points: [
+           { id: 'p1', title: '魔法のレイヤー', description: '顔周りの小顔効果と全体のふんわり感を両立させる、計算されたレイヤーバランス。' }
+        ],
+        lessons: [
+            { id: 'l1', title: 'バックセクション', url: 'https://fants.jp/feeds/664277?openExternalBrowser=1' },
+            { id: 'l2', title: '右サイドレイヤー', url: 'https://fants.jp/feeds/666111?openExternalBrowser=1' },
+            { id: 'l3', title: 'オーバーレイヤー', url: 'https://fants.jp/feeds/666114?openExternalBrowser=1' },
+            { id: 'l4', title: '前髪カット・顔まわり', url: 'https://fants.jp/feeds/666119?openExternalBrowser=1' },
+            { id: 'l5', title: 'もみれ毛', url: 'https://fants.jp/feeds/666123?openExternalBrowser=1' },
+            { id: 'l6', title: 'SNSについて', url: 'https://fants.jp/feeds/666125?openExternalBrowser=1' },
+            { id: 'l7', title: '撮影', url: 'https://fants.jp/feeds/666128?openExternalBrowser=1' },
+        ]
+      },
+      {
         id: 'dry-short-mugishima',
         name: '【予約で埋まり続けるドライショート｜yaeca代表 麦島幸次 氏】',
         description: '予約が絶えない人気スタイリスト麦島氏による、再現性の高いドライショートの極意。カウンセリングから撮影まで、サロンワークの全工程を公開。',
