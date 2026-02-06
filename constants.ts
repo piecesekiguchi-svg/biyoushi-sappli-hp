@@ -376,6 +376,26 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '業界を牽引する特別講師による、撮影技術やブランディングを含めた総合セミナー。',
     styles: [
       {
+        id: 'dry-short-mugishima',
+        name: '【予約で埋まり続けるドライショート｜yaeca代表 麦島幸次 氏】',
+        description: '予約が絶えない人気スタイリスト麦島氏による、再現性の高いドライショートの極意。カウンセリングから撮影まで、サロンワークの全工程を公開。',
+        date: '2024.03.30',
+        points: [
+           { id: 'p1', title: 'ドライカットの精度', description: '乾いた状態で切ることで、クセや生え方をダイレクトに補正し、自宅での再現性を高める。' }
+        ],
+        lessons: [
+          { id: 'l1', title: 'カウンセリング', url: 'https://fants.jp/feeds/654181?openExternalBrowser=1' },
+          { id: 'l2', title: 'ベースカット', url: 'https://fants.jp/feeds/655380?openExternalBrowser=1' },
+          { id: 'l3', title: 'ベースカット２', url: 'https://fants.jp/feeds/654632?openExternalBrowser=1' },
+          { id: 'l4', title: 'セニング・質感調整', url: 'https://fants.jp/feeds/654640?openExternalBrowser=1' },
+          { id: 'l5', title: '顔まわり', url: 'https://fants.jp/feeds/654655?openExternalBrowser=1' },
+          { id: 'l6', title: 'ウェット・ドライ', url: 'https://fants.jp/feeds/654663?openExternalBrowser=1' },
+          { id: 'l7', title: 'ディティールワーク', url: 'https://fants.jp/feeds/654667?openExternalBrowser=1' },
+          { id: 'l8', title: 'フィニッシュワーク・スタイリング', url: 'https://fants.jp/feeds/654673?openExternalBrowser=1' },
+          { id: 'l9', title: '撮影', url: 'https://fants.jp/feeds/654678?openExternalBrowser=1' },
+        ]
+      },
+      {
         id: 'royal-road-layer-matsuura',
         name: '【王道レイヤー｜kumu代表 松浦ふうま 氏】',
         description: '誰からも愛される王道レイヤーの決定版。ベースカットの正確性から、質感を高めるスタイリング、撮影テクニックまでを網羅。',
