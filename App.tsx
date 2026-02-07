@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { INITIAL_CATEGORIES, INITIAL_ANNOUNCEMENTS } from './constants';
 import { Category, SalonStyle, ViewLevel, Announcement, StylePoint } from './types';
 import { Button } from './components/Button';
 import { AddModal } from './components/AddModal';
 import { generateStyleSuggestion } from './services/geminiService';
-import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Search, History, Clock, Calendar, Heart } from 'lucide-react';
+import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Search, History, Clock, Calendar, Heart, TrendingUp, Sparkles } from 'lucide-react';
 
 // --- VISUAL HELPERS ---
 const getGradientClass = (id: string, intensity: 'light' | 'medium' | 'dark' = 'light') => {
@@ -41,10 +41,10 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return [...array].sort(() => Math.random() - 0.5);
 };
 
-// --- SUB-COMPONENTS (Defined outside App to prevent re-renders losing focus) ---
+// --- SUB-COMPONENTS ---
 
 const NewsSection: React.FC<{ announcements: Announcement[] }> = ({ announcements }) => (
-  <div className="mb-10 animate-in fade-in slide-in-from-top-4 duration-700 bg-white border border-gray-100 rounded-lg p-5 shadow-sm">
+  <div className="mb-12 animate-in fade-in slide-in-from-top-4 duration-700 bg-white border border-gray-100 rounded-lg p-5 shadow-sm">
       <div className="flex items-center justify-between mb-4 border-b border-gray-100 pb-2">
         <h3 className="text-sm font-bold tracking-widest text-salon-black uppercase font-serif flex items-center gap-2">
           <span className="w-1 h-4 bg-salon-accent rounded-full"></span>
@@ -69,6 +69,60 @@ const NewsSection: React.FC<{ announcements: Announcement[] }> = ({ announcement
       </ul>
   </div>
 );
+
+const CarouselSection: React.FC<{ 
+  title: string; 
+  icon: React.ReactNode;
+  styles: (SalonStyle & { categoryTitle?: string })[]; 
+  onSelectStyle: (s: SalonStyle) => void; 
+}> = ({ title, icon, styles, onSelectStyle }) => {
+  if (styles.length === 0) return null;
+
+  return (
+    <div className="mb-16 animate-in fade-in slide-in-from-right-4 duration-700">
+      <div className="flex items-center gap-2 mb-6 px-1">
+         <div className="p-1.5 rounded-full bg-salon-light text-salon-black">
+           {icon}
+         </div>
+         <h3 className="text-sm font-bold tracking-widest text-salon-black uppercase font-serif">{title}</h3>
+      </div>
+      <div className="flex overflow-x-auto gap-5 pb-8 snap-x px-1 -mx-4 md:mx-0 px-4 md:px-0 scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent">
+         {styles.map(style => (
+            <div 
+               key={style.id}
+               onClick={() => onSelectStyle(style)}
+               className="flex-shrink-0 w-64 md:w-72 snap-center cursor-pointer group"
+            >
+               <div className={`aspect-video rounded-xl mb-4 overflow-hidden relative ${getGradientClass(style.id, 'medium')} shadow-sm group-hover:shadow-lg transition-all duration-300 border border-gray-100/50`}>
+                  {style.imageUrl ? (
+                     <img src={style.imageUrl} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  ) : (
+                     <div className="absolute inset-0 flex items-center justify-center text-white/40">
+                        <Video size={32} />
+                     </div>
+                  )}
+                  {/* Play icon overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all transform scale-90 group-hover:scale-100 text-salon-black translate-y-2 group-hover:translate-y-0 duration-300">
+                         <PlayCircle size={24} className="ml-0.5" />
+                      </div>
+                  </div>
+               </div>
+               <div className="px-1">
+                 <h4 className="font-medium text-salon-black text-sm md:text-base leading-snug mb-2 group-hover:text-salon-accent transition-colors line-clamp-2">{style.name}</h4>
+                 {style.categoryTitle && (
+                   <div className="flex items-center gap-2">
+                     <span className="w-1.5 h-1.5 rounded-full bg-salon-accent"></span>
+                     <span className="text-[10px] text-gray-400 uppercase tracking-wider block truncate">{style.categoryTitle}</span>
+                   </div>
+                 )}
+               </div>
+            </div>
+         ))}
+      </div>
+    </div>
+  );
+};
 
 const MobileMenu: React.FC<{
   isOpen: boolean;
@@ -106,12 +160,12 @@ const MobileMenu: React.FC<{
     <>
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity"
+          className="fixed inset-0 bg-black/50 z-40 transition-opacity"
           onClick={onClose}
         />
       )}
       
-      <div className={`fixed top-0 left-0 w-80 h-full bg-salon-light z-50 transform transition-transform duration-300 ease-in-out md:hidden shadow-2xl ${isOpen ? 'translate-x-0' : '-translate-x-full'} overflow-y-auto`}>
+      <div className={`fixed top-0 left-0 w-80 h-full bg-salon-light z-50 transform transition-transform duration-300 ease-in-out shadow-2xl ${isOpen ? 'translate-x-0' : '-translate-x-full'} overflow-y-auto`}>
         <div className="p-5 flex items-center justify-between border-b border-gray-200 bg-white/50 backdrop-blur-sm sticky top-0 z-10">
           <span className="font-serif font-bold text-lg text-salon-black tracking-widest">MENU</span>
           <button onClick={onClose} className="text-gray-500 hover:text-black">
@@ -147,7 +201,7 @@ const MobileMenu: React.FC<{
                 filteredStyles.map(style => (
                   <button 
                     key={style.id} 
-                    onClick={() => onSelectStyle(style)}
+                    onClick={() => { onSelectStyle(style); onClose(); }}
                     className="w-full text-left px-3 py-3 rounded-lg bg-white/50 hover:bg-white transition-colors flex items-center justify-between border border-transparent hover:border-gray-100"
                   >
                     <div className="flex flex-col items-start overflow-hidden">
@@ -170,7 +224,7 @@ const MobileMenu: React.FC<{
                 {categories.map((category) => (
                   <button
                     key={category.id}
-                    onClick={() => onSelectCategory(category)}
+                    onClick={() => { onSelectCategory(category); onClose(); }}
                     className={`w-full text-left px-3 py-3 rounded-lg transition-colors flex items-center justify-between ${selectedCategory?.id === category.id ? 'bg-white text-salon-black shadow-sm font-medium' : 'text-gray-600 hover:bg-white/50'}`}
                   >
                     <span>{category.id === 'latest-updates' ? '最新の授業動画' : category.title}</span>
@@ -200,13 +254,32 @@ const MobileMenu: React.FC<{
 const CategoryListView: React.FC<{
   categories: Category[];
   announcements: Announcement[];
+  recommendedStyles: (SalonStyle & { categoryTitle?: string })[];
+  popularStyles: (SalonStyle & { categoryTitle?: string })[];
   onSelectCategory: (c: Category) => void;
+  onSelectStyle: (s: SalonStyle) => void;
   onOpenAddModal: () => void;
-}> = ({ categories, announcements, onSelectCategory, onOpenAddModal }) => (
+}> = ({ categories, announcements, recommendedStyles, popularStyles, onSelectCategory, onSelectStyle, onOpenAddModal }) => (
   <>
     <NewsSection announcements={announcements} />
     
-    <div className="flex items-center gap-2 mb-6 px-1">
+    {/* Recommended Section */}
+    <CarouselSection 
+      title="Recommended For You" 
+      icon={<Sparkles size={16} className="text-salon-accent fill-salon-accent" />}
+      styles={recommendedStyles} 
+      onSelectStyle={onSelectStyle} 
+    />
+
+    {/* Popular Section */}
+    <CarouselSection 
+      title="Popular Videos" 
+      icon={<TrendingUp size={16} className="text-salon-accent" />}
+      styles={popularStyles} 
+      onSelectStyle={onSelectStyle} 
+    />
+    
+    <div className="flex items-center gap-2 mb-6 px-1 mt-12">
         <h3 className="text-xs font-bold tracking-widest text-salon-gray uppercase">Contents</h3>
         <div className="h-px bg-gray-200 flex-1"></div>
     </div>
@@ -726,6 +799,50 @@ const App: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
+  // Logic for Recommended Styles
+  const recommendedStyles = useMemo(() => {
+    const allStyles = categories.flatMap(c => 
+      c.id === 'latest-updates' ? [] : c.styles.map(s => ({...s, categoryTitle: c.title, categoryId: c.id}))
+    );
+    
+    // Get IDs of styles the user interacted with
+    const interactedIds = new Set([...favorites, ...accessHistory.map(h => h.style.id)]);
+    
+    // If no interactions, return random styles from Basic & Advance for variety
+    if (interactedIds.size === 0) {
+      return shuffleArray(allStyles.filter(s => ['basic', 'advance'].includes(s.categoryId))).slice(0, 8);
+    }
+
+    // Find categories of interacted styles
+    const interactedCategoryIds = new Set(
+       allStyles.filter(s => interactedIds.has(s.id)).map(s => s.categoryId)
+    );
+    
+    // Find candidates: styles in those categories that are NOT already in history/favorites (for discovery)
+    // If we run out, fill with others
+    let candidates = allStyles.filter(s => 
+      interactedCategoryIds.has(s.categoryId) && !interactedIds.has(s.id)
+    );
+
+    // Fallback if not enough new styles in those categories
+    if (candidates.length < 5) {
+       candidates = [...candidates, ...allStyles.filter(s => !interactedIds.has(s.id) && !interactedCategoryIds.has(s.categoryId))];
+    }
+    
+    return shuffleArray(candidates).slice(0, 8);
+  }, [categories, favorites, accessHistory]);
+
+  // Logic for Popular Styles (Simulated)
+  const popularStyles = useMemo(() => {
+     // Simulate popularity by picking styles with substantial content (lessons/videos) from specific categories
+     const allStyles = categories.flatMap(c => 
+      c.id === 'latest-updates' ? [] : c.styles.map(s => ({...s, categoryTitle: c.title}))
+    );
+     // Filter for "content rich" styles as a proxy for popularity
+     const richStyles = allStyles.filter(s => s.lessons && s.lessons.length > 0);
+     return shuffleArray(richStyles).slice(0, 8);
+  }, [categories]);
+  
   // Navigation Handlers
   const goBack = () => {
     if (currentLevel === 'STYLE_DETAIL') {
@@ -954,12 +1071,19 @@ const App: React.FC = () => {
           </div>
           
           <div className="flex items-center gap-4">
-             <button className="md:hidden p-2 text-gray-500" onClick={() => setIsMobileMenuOpen(true)}>
-                <Menu size={24} strokeWidth={1.5} />
+             {/* Enhanced PC Menu Button for better visibility */}
+             <button 
+               className="flex items-center gap-2 p-2 text-gray-500 hover:text-salon-black transition-colors group" 
+               onClick={() => setIsMobileMenuOpen(true)}
+             >
+                <div className="p-1 rounded-full group-hover:bg-gray-100 transition-colors">
+                  <Menu size={24} strokeWidth={1.5} />
+                </div>
+                <span className="hidden md:block text-xs font-bold tracking-widest uppercase mt-0.5">Menu</span>
              </button>
-             <div className="hidden md:flex items-center gap-10 text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase">
+             
+             <div className="hidden md:flex items-center gap-6 text-[10px] font-bold tracking-[0.2em] text-gray-400 uppercase border-l border-gray-200 pl-6 ml-2 h-8">
                <button onClick={() => setCurrentLevel('MY_PAGE')} className={`hover:text-salon-black transition-colors ${currentLevel === 'MY_PAGE' ? 'text-salon-black' : ''}`}>My Page</button>
-               <span className="w-px h-3 bg-gray-200"></span>
                <button className="text-salon-black hover:text-salon-accent transition-colors">Log Out</button>
              </div>
           </div>
@@ -977,7 +1101,10 @@ const App: React.FC = () => {
             <CategoryListView 
               categories={categories}
               announcements={announcements}
+              recommendedStyles={recommendedStyles}
+              popularStyles={popularStyles}
               onSelectCategory={handleSelectCategory}
+              onSelectStyle={handleSelectStyle}
               onOpenAddModal={() => setIsAddModalOpen(true)}
             />
           )}
