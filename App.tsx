@@ -4,7 +4,7 @@ import { Category, SalonStyle, ViewLevel, Announcement, StylePoint } from './typ
 import { Button } from './components/Button';
 import { AddModal } from './components/AddModal';
 import { generateStyleSuggestion } from './services/geminiService';
-import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Search, History, Clock, Calendar } from 'lucide-react';
+import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Search, History, Clock, Calendar, Heart } from 'lucide-react';
 
 // --- VISUAL HELPERS ---
 const getGradientClass = (id: string, intensity: 'light' | 'medium' | 'dark' = 'light') => {
@@ -120,6 +120,15 @@ const MobileMenu: React.FC<{
         </div>
         
         <div className="p-4 space-y-4">
+          {/* MY PAGE at the top */}
+          <button 
+            onClick={() => { onGoToMyPage(); onClose(); }}
+            className="w-full text-left px-4 py-3 bg-salon-black text-white rounded-lg shadow-md hover:bg-salon-dark transition-all flex items-center justify-between group mb-6"
+          >
+            <span className="font-bold tracking-widest text-sm">MY PAGE</span>
+            <ChevronRight size={16} className="text-white group-hover:translate-x-1 transition-transform" />
+          </button>
+
           <div className="relative">
             <Search className="absolute left-3 top-2.5 text-gray-400" size={16} />
             <input 
@@ -172,12 +181,6 @@ const MobileMenu: React.FC<{
               
               <div className="border-t border-gray-200 my-4"></div>
               
-              <button 
-                onClick={() => { onGoToMyPage(); onClose(); }}
-                className="w-full text-left px-3 py-2 text-gray-600 hover:text-black hover:bg-white/50 rounded-lg transition-colors"
-              >
-                MY PAGE
-              </button>
               <a 
                 href="https://lin.ee/ePKpXeq"
                 target="_blank"
@@ -360,9 +363,11 @@ const StyleListView: React.FC<{
 const StyleDetailView: React.FC<{
   style: SalonStyle | null;
   note: string;
+  isFavorite: boolean;
   onNoteChange: (val: string) => void;
   onSaveNote: () => void;
-}> = ({ style, note, onNoteChange, onSaveNote }) => {
+  onToggleFavorite: () => void;
+}> = ({ style, note, isFavorite, onNoteChange, onSaveNote, onToggleFavorite }) => {
   if (!style) return null;
 
   return (
@@ -393,6 +398,15 @@ const StyleDetailView: React.FC<{
           </div>
           <h1 className="text-3xl md:text-5xl font-serif text-white mb-6 leading-normal tracking-wide">{style.name}</h1>
           <p className="text-gray-200 text-lg font-light leading-relaxed opacity-90 tracking-wide">{style.description}</p>
+          
+          {/* Favorite Button */}
+          <button 
+            onClick={onToggleFavorite}
+            className={`mt-6 inline-flex items-center gap-2 px-6 py-2 rounded-full border transition-all duration-300 backdrop-blur-md ${isFavorite ? 'bg-salon-accent border-salon-accent text-white' : 'bg-white/10 border-white/30 text-white hover:bg-white/20'}`}
+          >
+            <Heart size={16} className={isFavorite ? "fill-current" : ""} />
+            <span className="text-xs font-bold tracking-widest uppercase">{isFavorite ? 'Favorited' : 'Add to Favorites'}</span>
+          </button>
         </div>
         
         {/* Background Accents (only if no image) */}
@@ -522,49 +536,96 @@ const StyleDetailView: React.FC<{
 
 const MyPageView: React.FC<{
   accessHistory: {style: SalonStyle, timestamp: Date}[];
+  favorites: string[];
+  categories: Category[];
   onSelectStyle: (s: SalonStyle) => void;
-}> = ({ accessHistory, onSelectStyle }) => (
-  <div className="max-w-4xl mx-auto min-h-[60vh]">
-      <div className="mb-10 text-center py-12 bg-salon-light/30 rounded-xl border border-gray-100">
-          <h1 className="text-3xl font-serif text-salon-black mb-2 tracking-widest">MY PAGE</h1>
-          <p className="text-gray-500 text-xs tracking-[0.3em] uppercase">History & Records</p>
-      </div>
+}> = ({ accessHistory, favorites, categories, onSelectStyle }) => {
+  
+  // Resolve favorites styles from IDs
+  const allStyles = categories.flatMap(c => c.styles);
+  const favoriteStyles = favorites.map(id => allStyles.find(s => s.id === id)).filter((s): s is SalonStyle => !!s);
 
-      <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6 md:p-8 mb-8">
-          <div className="flex items-center gap-2 mb-6 border-b border-gray-100 pb-4">
-              <History size={20} className="text-salon-accent" />
-              <h2 className="text-lg font-medium text-salon-black tracking-wide">アクセス履歴</h2>
-          </div>
-          
-          {accessHistory.length === 0 ? (
-              <div className="text-center py-16 text-gray-400 flex flex-col items-center">
-                  <Clock size={48} strokeWidth={1} className="mb-4 opacity-30" />
-                  <p className="text-sm tracking-wide">まだ閲覧履歴がありません。</p>
-              </div>
-          ) : (
-              <div className="space-y-4">
-                  {accessHistory.map((log, index) => (
-                      <div key={index} onClick={() => onSelectStyle(log.style)} className="flex items-center justify-between p-4 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors group border border-transparent hover:border-gray-100">
-                          <div className="flex items-center gap-4">
-                              <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-serif ${getGradientClass(log.style.id, 'dark')} flex-shrink-0`}>
-                                  {log.style.name.charAt(0)}
-                              </div>
-                              <div>
-                                  <h3 className="text-salon-black font-medium group-hover:text-salon-accent transition-colors text-sm md:text-base tracking-wide">{log.style.name}</h3>
-                                  <p className="text-[10px] text-gray-400 flex items-center gap-1 mt-1">
-                                      <Clock size={10} />
-                                      {log.timestamp.toLocaleDateString()} {log.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                                  </p>
-                              </div>
-                          </div>
-                          <ChevronRight size={16} className="text-gray-300" />
-                      </div>
+  return (
+    <div className="max-w-4xl mx-auto min-h-[60vh]">
+        <div className="mb-10 text-center py-12 bg-salon-light/30 rounded-xl border border-gray-100">
+            <h1 className="text-3xl font-serif text-salon-black mb-2 tracking-widest">MY PAGE</h1>
+            <p className="text-gray-500 text-xs tracking-[0.3em] uppercase">History & Records</p>
+        </div>
+
+        {/* Favorites Section */}
+        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6 md:p-8 mb-8">
+            <div className="flex items-center gap-2 mb-6 border-b border-gray-100 pb-4">
+                <Heart size={20} className="text-salon-accent fill-salon-accent" />
+                <h2 className="text-lg font-medium text-salon-black tracking-wide">お気に入り</h2>
+            </div>
+            
+            {favoriteStyles.length === 0 ? (
+                <div className="text-center py-8 text-gray-400 flex flex-col items-center">
+                    <Heart size={32} strokeWidth={1} className="mb-4 opacity-30" />
+                    <p className="text-sm tracking-wide">お気に入りのスタイルはまだありません。</p>
+                </div>
+            ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {favoriteStyles.map(style => (
+                    <div 
+                      key={style.id} 
+                      onClick={() => onSelectStyle(style)}
+                      className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors border border-gray-100 group"
+                    >
+                       <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-white text-xs font-serif ${getGradientClass(style.id, 'medium')} flex-shrink-0 overflow-hidden`}>
+                          {style.imageUrl ? (
+                             <img src={style.imageUrl} alt="" className="w-full h-full object-cover" />
+                          ) : (
+                             style.name.charAt(0)
+                          )}
+                       </div>
+                       <div className="overflow-hidden">
+                          <h3 className="text-salon-black font-medium text-sm truncate group-hover:text-salon-accent transition-colors">{style.name}</h3>
+                          <p className="text-[10px] text-gray-400 mt-1 line-clamp-1">{style.description}</p>
+                       </div>
+                    </div>
                   ))}
-              </div>
-          )}
-      </div>
-  </div>
-);
+                </div>
+            )}
+        </div>
+
+        {/* History Section */}
+        <div className="bg-white rounded-lg border border-gray-100 shadow-sm p-6 md:p-8 mb-8">
+            <div className="flex items-center gap-2 mb-6 border-b border-gray-100 pb-4">
+                <History size={20} className="text-salon-accent" />
+                <h2 className="text-lg font-medium text-salon-black tracking-wide">アクセス履歴 (直近3件)</h2>
+            </div>
+            
+            {accessHistory.length === 0 ? (
+                <div className="text-center py-16 text-gray-400 flex flex-col items-center">
+                    <Clock size={48} strokeWidth={1} className="mb-4 opacity-30" />
+                    <p className="text-sm tracking-wide">まだ閲覧履歴がありません。</p>
+                </div>
+            ) : (
+                <div className="space-y-4">
+                    {accessHistory.map((log, index) => (
+                        <div key={index} onClick={() => onSelectStyle(log.style)} className="flex items-center justify-between p-4 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors group border border-transparent hover:border-gray-100">
+                            <div className="flex items-center gap-4">
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-serif ${getGradientClass(log.style.id, 'dark')} flex-shrink-0`}>
+                                    {log.style.name.charAt(0)}
+                                </div>
+                                <div>
+                                    <h3 className="text-salon-black font-medium group-hover:text-salon-accent transition-colors text-sm md:text-base tracking-wide">{log.style.name}</h3>
+                                    <p className="text-[10px] text-gray-400 flex items-center gap-1 mt-1">
+                                        <Clock size={10} />
+                                        {log.timestamp.toLocaleDateString()} {log.timestamp.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                    </p>
+                                </div>
+                            </div>
+                            <ChevronRight size={16} className="text-gray-300" />
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    </div>
+  );
+};
 
 // --- MAIN APP COMPONENT ---
 
@@ -627,6 +688,17 @@ const App: React.FC = () => {
     }
   });
 
+  // Persistent Favorites
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('salon_user_favorites');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      console.error("Failed to load favorites", e);
+      return [];
+    }
+  });
+
   // Local state for editing note in the detail view
   const [editingNote, setEditingNote] = useState('');
 
@@ -639,6 +711,11 @@ const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('salon_user_notes', JSON.stringify(notes));
   }, [notes]);
+
+  // Save favorites to localStorage
+  useEffect(() => {
+    localStorage.setItem('salon_user_favorites', JSON.stringify(favorites));
+  }, [favorites]);
 
   const [currentLevel, setCurrentLevel] = useState<ViewLevel>('CATEGORY_LIST');
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
@@ -676,12 +753,12 @@ const App: React.FC = () => {
   };
 
   const handleSelectStyle = (style: SalonStyle) => {
-    // Add to history
+    // Add to history (Limit to 3)
     setAccessHistory(prev => {
       // Remove previous entry of the same style to bring it to top
       const filtered = prev.filter(h => h.style.id !== style.id);
       const newHistory = [{style, timestamp: new Date()}, ...filtered];
-      return newHistory.slice(0, 20); // Keep last 20
+      return newHistory.slice(0, 3); // Keep only last 3
     });
 
     // Special handling for CORE PHASE: Treat as direct links (2-level structure)
@@ -719,6 +796,18 @@ const App: React.FC = () => {
         [selectedStyle.id]: editingNote
       }));
       alert('メモを保存しました');
+    }
+  };
+
+  const handleToggleFavorite = () => {
+    if (selectedStyle) {
+      setFavorites(prev => {
+        if (prev.includes(selectedStyle.id)) {
+          return prev.filter(id => id !== selectedStyle.id);
+        } else {
+          return [...prev, selectedStyle.id];
+        }
+      });
     }
   };
 
@@ -905,14 +994,18 @@ const App: React.FC = () => {
             <StyleDetailView 
               style={selectedStyle}
               note={editingNote}
+              isFavorite={selectedStyle ? favorites.includes(selectedStyle.id) : false}
               onNoteChange={setEditingNote}
               onSaveNote={handleSaveNote}
+              onToggleFavorite={handleToggleFavorite}
             />
           )}
 
           {currentLevel === 'MY_PAGE' && (
             <MyPageView 
               accessHistory={accessHistory}
+              favorites={favorites}
+              categories={categories}
               onSelectStyle={handleSelectStyle}
             />
           )}
