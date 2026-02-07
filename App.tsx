@@ -753,13 +753,13 @@ const App: React.FC = () => {
           </div>
           <div className="relative group">
             <textarea 
-              className="w-full p-6 bg-gray-50 rounded-xl border border-transparent focus:bg-white focus:border-salon-gray/30 focus:ring-0 resize-none text-sm leading-8 text-gray-700 placeholder-gray-400 transition-all shadow-sm group-hover:shadow-md font-light tracking-wide"
+              className="w-full p-6 pb-20 bg-gray-50 rounded-xl border border-transparent focus:bg-white focus:border-salon-gray/30 focus:ring-0 resize-none text-base md:text-sm leading-relaxed text-gray-700 placeholder-gray-400 transition-all shadow-sm group-hover:shadow-md font-light tracking-wide appearance-none"
               rows={5}
               placeholder="このスタイルに関する気づきや、練習での反省点を記録しましょう..."
               value={editingNote}
               onChange={(e) => setEditingNote(e.target.value)}
             ></textarea>
-            <div className="absolute bottom-4 right-4">
+            <div className="absolute bottom-4 right-4 z-10">
               <Button size="sm" variant="secondary" className="tracking-widest text-xs" onClick={handleSaveNote}>保存する</Button>
             </div>
           </div>
