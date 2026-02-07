@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { INITIAL_CATEGORIES, INITIAL_ANNOUNCEMENTS } from './constants';
 import { Category, SalonStyle, ViewLevel, Announcement, StylePoint } from './types';
 import { Button } from './components/Button';
@@ -72,7 +72,46 @@ const App: React.FC = () => {
   });
 
   const [announcements] = useState<Announcement[]>(INITIAL_ANNOUNCEMENTS);
-  const [accessHistory, setAccessHistory] = useState<{style: SalonStyle, timestamp: Date}[]>([]);
+  
+  // Persistent Access History
+  const [accessHistory, setAccessHistory] = useState<{style: SalonStyle, timestamp: Date}[]>(() => {
+    try {
+      const saved = localStorage.getItem('salon_access_history');
+      if (saved) {
+        return JSON.parse(saved).map((item: any) => ({
+          ...item,
+          timestamp: new Date(item.timestamp)
+        }));
+      }
+    } catch (e) {
+      console.error("Failed to load history", e);
+    }
+    return [];
+  });
+
+  // Persistent Notes
+  const [notes, setNotes] = useState<Record<string, string>>(() => {
+    try {
+      const saved = localStorage.getItem('salon_user_notes');
+      return saved ? JSON.parse(saved) : {};
+    } catch (e) {
+      console.error("Failed to load notes", e);
+      return {};
+    }
+  });
+
+  // Local state for editing note in the detail view
+  const [editingNote, setEditingNote] = useState('');
+
+  // Save history to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('salon_access_history', JSON.stringify(accessHistory));
+  }, [accessHistory]);
+
+  // Save notes to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('salon_user_notes', JSON.stringify(notes));
+  }, [notes]);
 
   const [currentLevel, setCurrentLevel] = useState<ViewLevel>('CATEGORY_LIST');
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
@@ -112,7 +151,9 @@ const App: React.FC = () => {
   const handleSelectStyle = (style: SalonStyle) => {
     // Add to history
     setAccessHistory(prev => {
-      const newHistory = [{style, timestamp: new Date()}, ...prev.filter(h => h.style.id !== style.id)];
+      // Remove previous entry of the same style to bring it to top
+      const filtered = prev.filter(h => h.style.id !== style.id);
+      const newHistory = [{style, timestamp: new Date()}, ...filtered];
       return newHistory.slice(0, 20); // Keep last 20
     });
 
@@ -138,8 +179,20 @@ const App: React.FC = () => {
     }
 
     setSelectedStyle(style);
+    // Load existing note for this style
+    setEditingNote(notes[style.id] || '');
     setCurrentLevel('STYLE_DETAIL');
     setIsMobileMenuOpen(false);
+  };
+
+  const handleSaveNote = () => {
+    if (selectedStyle) {
+      setNotes(prev => ({
+        ...prev,
+        [selectedStyle.id]: editingNote
+      }));
+      alert('メモを保存しました');
+    }
   };
 
   // Add Content Handlers
@@ -703,9 +756,11 @@ const App: React.FC = () => {
               className="w-full p-6 bg-gray-50 rounded-xl border border-transparent focus:bg-white focus:border-salon-gray/30 focus:ring-0 resize-none text-sm leading-8 text-gray-700 placeholder-gray-400 transition-all shadow-sm group-hover:shadow-md font-light tracking-wide"
               rows={5}
               placeholder="このスタイルに関する気づきや、練習での反省点を記録しましょう..."
+              value={editingNote}
+              onChange={(e) => setEditingNote(e.target.value)}
             ></textarea>
             <div className="absolute bottom-4 right-4">
-              <Button size="sm" variant="secondary" className="tracking-widest text-xs">保存する</Button>
+              <Button size="sm" variant="secondary" className="tracking-widest text-xs" onClick={handleSaveNote}>保存する</Button>
             </div>
           </div>
         </div>
