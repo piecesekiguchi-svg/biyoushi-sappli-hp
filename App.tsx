@@ -265,7 +265,7 @@ const CategoryListView: React.FC<{
     
     {/* Recommended Section */}
     <CarouselSection 
-      title="Recommended For You" 
+      title="あなたへのおすすめ"
       icon={<Sparkles size={16} className="text-salon-accent fill-salon-accent" />}
       styles={recommendedStyles} 
       onSelectStyle={onSelectStyle} 
@@ -273,7 +273,7 @@ const CategoryListView: React.FC<{
 
     {/* Popular Section */}
     <CarouselSection 
-      title="Popular Videos" 
+      title="人気の動画"
       icon={<TrendingUp size={16} className="text-salon-accent" />}
       styles={popularStyles} 
       onSelectStyle={onSelectStyle} 
@@ -725,7 +725,7 @@ const App: React.FC = () => {
       id: 'latest-updates',
       title: 'LATEST UPDATES',
       subtitle: '最新の動画',
-      description: '全カテゴリー（居酒屋セキグチを除く）の中から更新日順に最新のコンテンツを表示しています。',
+      description: '',
       styles: latestStyles
     };
     
