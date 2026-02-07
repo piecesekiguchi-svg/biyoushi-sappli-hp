@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { INITIAL_CATEGORIES, INITIAL_ANNOUNCEMENTS } from './constants';
-import { Category, SalonStyle, ViewLevel, Announcement, StylePoint } from './types';
+import { Category, SalonStyle, ViewLevel, Announcement } from './types';
 import { Button } from './components/Button';
-import { AddModal } from './components/AddModal';
-import { generateStyleSuggestion } from './services/geminiService';
-import { ChevronRight, ExternalLink, ArrowLeft, Plus, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Search, History, Clock, Calendar, Heart, TrendingUp, Sparkles } from 'lucide-react';
+import { ChevronRight, ExternalLink, ArrowLeft, Scissors, BookOpen, AlertCircle, PlayCircle, Menu, X, Star, Video, Zap, Search, History, Clock, Calendar, Heart, TrendingUp, Sparkles } from 'lucide-react';
 
 // --- VISUAL HELPERS ---
 const getGradientClass = (id: string, intensity: 'light' | 'medium' | 'dark' = 'light') => {
@@ -258,8 +256,7 @@ const CategoryListView: React.FC<{
   popularStyles: (SalonStyle & { categoryTitle?: string })[];
   onSelectCategory: (c: Category) => void;
   onSelectStyle: (s: SalonStyle) => void;
-  onOpenAddModal: () => void;
-}> = ({ categories, announcements, recommendedStyles, popularStyles, onSelectCategory, onSelectStyle, onOpenAddModal }) => (
+}> = ({ categories, announcements, recommendedStyles, popularStyles, onSelectCategory, onSelectStyle }) => (
   <>
     <NewsSection announcements={announcements} />
     
@@ -340,17 +337,6 @@ const CategoryListView: React.FC<{
           </div>
         </div>
       ))}
-      
-      {/* Add Button as a card */}
-      <button 
-        onClick={onOpenAddModal}
-        className="flex flex-col items-center justify-center aspect-[4/3] border border-dashed border-gray-300 rounded-sm text-gray-400 hover:border-salon-black hover:text-salon-black transition-all group bg-white hover:bg-gray-50"
-      >
-        <div className="w-12 h-12 rounded-full bg-salon-light flex items-center justify-center group-hover:bg-white border border-transparent group-hover:border-gray-200 transition-all shadow-sm">
-          <Plus size={24} strokeWidth={1.5} />
-        </div>
-        <span className="mt-3 text-sm font-medium tracking-widest">ADD NEW PHASE</span>
-      </button>
     </div>
   </>
 );
@@ -358,8 +344,7 @@ const CategoryListView: React.FC<{
 const StyleListView: React.FC<{
   category: Category;
   onSelectStyle: (s: SalonStyle) => void;
-  onOpenAddModal: () => void;
-}> = ({ category, onSelectStyle, onOpenAddModal }) => (
+}> = ({ category, onSelectStyle }) => (
   <div>
     <div className={`mb-10 text-center py-16 px-4 rounded-xl ${getGradientClass(category.id, 'light')} border border-gray-100`}>
       <h1 className="text-4xl md:text-5xl font-serif text-salon-black mb-5 tracking-wide leading-tight">{category.title}</h1>
@@ -418,17 +403,6 @@ const StyleListView: React.FC<{
           </div>
         );
       })}
-
-      {/* Hide Add button if in Latest Updates view to avoid confusion */}
-      {category.id !== 'latest-updates' && (
-        <button 
-          onClick={onOpenAddModal}
-          className="w-full py-5 border border-dashed border-gray-300 rounded-lg text-gray-400 hover:border-salon-black hover:text-salon-black hover:bg-gray-50 transition-all flex items-center justify-center gap-2 group"
-        >
-          <Plus size={18} strokeWidth={1.5} className="group-hover:scale-110 transition-transform" />
-          <span className="text-sm font-medium tracking-widest">新しいスタイルを追加</span>
-        </button>
-      )}
     </div>
   </div>
 );
@@ -704,7 +678,7 @@ const MyPageView: React.FC<{
 
 const App: React.FC = () => {
   // State
-  const [categories, setCategories] = useState<Category[]>(() => {
+  const [categories] = useState<Category[]>(() => {
     // Initialize with LATEST UPDATES category
     // Logic: Flatten all styles excluding 'izakaya', sort by date descending, take top 8
     
@@ -795,8 +769,6 @@ const App: React.FC = () => {
   const [selectedStyle, setSelectedStyle] = useState<SalonStyle | null>(null);
   
   // UI State
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   // Logic for Recommended Styles
@@ -928,89 +900,6 @@ const App: React.FC = () => {
     }
   };
 
-  // Add Content Handlers
-  const handleAdd = async (name: string, imageUrl: string, isAutoGenerate: boolean) => {
-    setIsGenerating(true);
-    
-    try {
-      if (currentLevel === 'CATEGORY_LIST') {
-        // Add Category
-        const newCategory: Category = {
-          id: `cat-${Date.now()}`,
-          title: name,
-          subtitle: 'New Phase',
-          description: '新たに追加された学習フェーズです。',
-          styles: [],
-          imageUrl: imageUrl || undefined,
-        };
-        setCategories([...categories, newCategory]);
-      } else if (currentLevel === 'STYLE_LIST' && selectedCategory) {
-        // Add Style
-        let description = '詳細情報はまだありません。';
-        let points: StylePoint[] = [];
-
-        if (isAutoGenerate) {
-          const generated = await generateStyleSuggestion(name, selectedCategory.title);
-          description = generated.description;
-          // Map to ensure data integrity and avoid runtime crashes if AI hallucinates format
-          points = (generated.points ?? []).map((p: any, i: number) => ({
-            id: `pt-${Date.now()}-${i}`,
-            title: typeof p === "string" ? p : (p.title ?? `Point ${i + 1}`),
-            description: typeof p === "string" ? "" : (p.description ?? ""),
-          }));
-        }
-
-        const currentDate = new Date().toISOString().split('T')[0].replace(/-/g, '.');
-
-        const newStyle: SalonStyle = {
-          id: `style-${Date.now()}`,
-          name: name,
-          description: description,
-          externalUrl: 'https://example.com',
-          points: points,
-          imageUrl: imageUrl || undefined,
-          date: currentDate,
-        };
-
-        const updatedCategories = categories.map(cat => {
-          // Update the specific category
-          if (cat.id === selectedCategory.id) {
-            return { ...cat, styles: [...cat.styles, newStyle] };
-          }
-          // Update Latest (Prepend new style to LATEST UPDATES)
-          if (cat.id === 'latest-updates') {
-             // Re-sort latest updates including the new one, excluding 'izakaya'
-             const allStyles = [...categories
-                .filter(c => c.id !== 'latest-updates' && c.id !== 'izakaya')
-                .flatMap(c => c.styles), 
-                newStyle
-             ];
-             const sorted = allStyles.sort((a, b) => {
-               const dateA = a.date ? new Date(a.date.replace(/\./g, '-')).getTime() : 0;
-               const dateB = b.date ? new Date(b.date.replace(/\./g, '-')).getTime() : 0;
-               return dateB - dateA;
-             });
-             return { ...cat, styles: sorted.slice(0, 8) };
-          }
-          return cat;
-        });
-
-        setCategories(updatedCategories);
-        
-        // Update currently selected category reference as well
-        if (selectedCategory.id !== 'latest-updates') {
-           setSelectedCategory({ ...selectedCategory, styles: [...selectedCategory.styles, newStyle] });
-        }
-      }
-    } catch (e) {
-      console.error(e);
-      alert('エラーが発生しました。');
-    } finally {
-      setIsGenerating(false);
-      setIsAddModalOpen(false);
-    }
-  };
-
   // Breadcrumbs Component (Internal helper, no state)
   const Breadcrumbs = () => (
     <nav className="flex items-center text-xs md:text-sm text-gray-500 mb-6 font-medium tracking-wide overflow-x-auto whitespace-nowrap pb-2 md:pb-0">
@@ -1105,7 +994,6 @@ const App: React.FC = () => {
               popularStyles={popularStyles}
               onSelectCategory={handleSelectCategory}
               onSelectStyle={handleSelectStyle}
-              onOpenAddModal={() => setIsAddModalOpen(true)}
             />
           )}
           
@@ -1113,7 +1001,6 @@ const App: React.FC = () => {
             <StyleListView 
               category={selectedCategory}
               onSelectStyle={handleSelectStyle}
-              onOpenAddModal={() => setIsAddModalOpen(true)}
             />
           )}
           
@@ -1144,15 +1031,6 @@ const App: React.FC = () => {
         <p className="font-serif italic text-xl mb-3 text-gray-300 tracking-wider">Beauty & Innovation</p>
         <p className="tracking-widest font-light">&copy; 2024 美容師サプリ / Izakaya Sekiguchi. All Rights Reserved.</p>
       </footer>
-
-      {/* Modals */}
-      <AddModal 
-        isOpen={isAddModalOpen} 
-        onClose={() => setIsAddModalOpen(false)}
-        onAdd={handleAdd}
-        type={currentLevel === 'CATEGORY_LIST' ? 'Category' : 'Style'}
-        isGenerating={isGenerating}
-      />
     </div>
   );
 };
