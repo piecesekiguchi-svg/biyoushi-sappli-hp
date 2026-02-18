@@ -112,6 +112,17 @@ export const INITIAL_CATEGORIES: Category[] = [
           { id: 'l1', title: 'ベースカット', url: 'https://fants.jp/feeds/595705?openExternalBrowser=1' },
           { id: 'l2', title: '右サイド', url: 'https://fants.jp/feeds/595728?openExternalBrowser=1' },
           { id: 'l3', title: 'チェックカット', url: 'https://fants.jp/feeds/595731?openExternalBrowser=1' },
+        ],
+        additionalLessonsTitle: 'ワンレングス失敗しやすいポイント',
+        additionalLessons: [
+          { id: 'fl1', title: '①アンダーブロッキング', url: 'https://fants.jp/feeds/1125473?openExternalBrowser=1' },
+          { id: 'fl2', title: '②頭の丸みについて', url: 'https://fants.jp/feeds/1125472?openExternalBrowser=1' },
+          { id: 'fl3', title: '③アンダーセクション', url: 'https://fants.jp/feeds/1127110?openExternalBrowser=1' },
+          { id: 'fl4', title: '④ミドル', url: 'https://fants.jp/feeds/1127120?openExternalBrowser=1' },
+          { id: 'fl5', title: '⑤サイドへのつながり', url: 'https://fants.jp/feeds/1127131?openExternalBrowser=1' },
+          { id: 'fl6', title: '⑥サイド', url: 'https://fants.jp/feeds/1127143?openExternalBrowser=1' },
+          { id: 'fl7', title: '⑦サイドオーバー', url: 'https://fants.jp/feeds/1127158?openExternalBrowser=1' },
+          { id: 'fl8', title: '⑧ラインの整え', url: 'https://fants.jp/feeds/1127216?openExternalBrowser=1' }
         ]
       },
       {

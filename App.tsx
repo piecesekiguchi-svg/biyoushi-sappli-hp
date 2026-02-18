@@ -525,6 +525,37 @@ const StyleDetailView: React.FC<{
             </div>
         )}
 
+        {/* ADDITIONAL LESSONS / FAILURE POINTS SECTION */}
+        {style.additionalLessons && style.additionalLessons.length > 0 && (
+          <div className="mb-16">
+            <h3 className="text-xl font-serif font-medium text-salon-black mb-6 tracking-wide flex items-center gap-2">
+              <AlertCircle size={20} className="text-salon-accent" />
+              {style.additionalLessonsTitle || "Check Points"}
+            </h3>
+            <div className="grid gap-3">
+              {style.additionalLessons.map((lesson, idx) => (
+                <a 
+                  key={lesson.id}
+                  href={lesson.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-between p-4 rounded-lg border border-red-100 bg-red-50/30 hover:bg-red-50 hover:border-red-200 transition-all group"
+                >
+                  <div className="flex items-center gap-4">
+                    <span className="w-6 h-6 rounded-full bg-white text-red-400 text-xs flex items-center justify-center border border-red-100 group-hover:border-red-300 group-hover:text-red-500 transition-colors font-serif">
+                      !
+                    </span>
+                    <span className="font-medium text-salon-dark group-hover:text-salon-black tracking-wide">
+                      {lesson.title}
+                    </span>
+                  </div>
+                  <ExternalLink size={16} className="text-gray-300 group-hover:text-red-400 transition-colors" />
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="grid gap-16">
           {style.points.map((point, idx) => (
             <div key={point.id} className="relative group">

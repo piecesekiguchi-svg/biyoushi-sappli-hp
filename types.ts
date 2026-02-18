@@ -18,6 +18,8 @@ export interface SalonStyle {
   description: string;
   points: StylePoint[];
   lessons?: Lesson[];
+  additionalLessonsTitle?: string;
+  additionalLessons?: Lesson[];
   date?: string; // YYYY.MM.DD format for sorting latest updates
 }
 
