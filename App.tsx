@@ -533,7 +533,7 @@ const StyleDetailView: React.FC<{
               {style.additionalLessonsTitle || "Check Points"}
             </h3>
             <div className="grid gap-3">
-              {style.additionalLessons.map((lesson, idx) => (
+              {style.additionalLessons.map((lesson) => (
                 <a 
                   key={lesson.id}
                   href={lesson.url}
