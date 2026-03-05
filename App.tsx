@@ -798,6 +798,11 @@ const App: React.FC = () => {
   const [currentLevel, setCurrentLevel] = useState<ViewLevel>('CATEGORY_LIST');
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
   const [selectedStyle, setSelectedStyle] = useState<SalonStyle | null>(null);
+
+  // Scroll to top on navigation change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentLevel, selectedCategory, selectedStyle]);
   
   // UI State
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
