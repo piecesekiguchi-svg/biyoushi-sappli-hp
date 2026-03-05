@@ -353,7 +353,19 @@ export const INITIAL_CATEGORIES: Category[] = [
         lessons: [
           { id: 'l1', title: 'ロングスライド', url: 'https://fants.jp/feeds/969785?openExternalBrowser=1' },
           { id: 'l2', title: 'ミディアムスライド', url: 'https://fants.jp/feeds/969796?openExternalBrowser=1' },
-          { id: 'l3', title: 'ショートスライド', url: 'https://fants.jp/feeds' },
+          { id: 'l3', title: 'ショートスライド', url: 'https://fants.jp/feeds/969800?openExternalBrowser=1' },
+        ]
+      },
+      {
+        id: 'slide-cut-design',
+        name: 'スライドカットデザイン',
+        description: 'スライドカットの初級編テクニック。',
+        date: '2023.01.01',
+        points: [],
+        lessons: [
+          { id: 'l1', title: 'スライドカット初級編①', url: 'https://fants.jp/feeds/1158411?openExternalBrowser=1' },
+          { id: 'l2', title: 'スライドカット初級編②', url: 'https://fants.jp/feeds/1158414?openExternalBrowser=1' },
+          { id: 'l3', title: 'スライドカット初級編③', url: 'https://fants.jp/feeds/1158415?openExternalBrowser=1' },
         ]
       }
     ]
