@@ -394,6 +394,19 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '業界を牽引する特別講師による、撮影技術やブランディングを含めた総合セミナー。',
     styles: [
       {
+        id: 'hiromu-shortcut-bodymotion',
+        name: 'ヴィダルサスーンアカデミー主席卒業！beep　ひろむ氏・ショートカットボディモーション',
+        description: 'ショートにおける体の使い方やベースごとのポイントを解説。',
+        date: '2026.03.12',
+        points: [],
+        lessons: [
+          { id: 'l1', title: 'ショートにおける体の使い方', url: 'https://fants.jp/feeds/1170598?openExternalBrowser=1' },
+          { id: 'l2', title: '前下がりベースのポイント', url: 'https://fants.jp/feeds/1170602?openExternalBrowser=1' },
+          { id: 'l3', title: '前上がりベースのポイント', url: 'https://fants.jp/feeds/1170605?openExternalBrowser=1' },
+          { id: 'l4', title: '前上がりベースバックセクション', url: 'https://fants.jp/feeds/1170610?openExternalBrowser=1' }
+        ]
+      },
+      {
         id: 'magic-layer-wataru',
         name: '【インスタフォロワー41.2万人｜cache cache代表 わたるマジック 氏】可愛いを叶えるマジックレイヤー',
         description: '圧倒的なフォロワー数を誇るわたるマジック氏による、"絶対に可愛くなれる"レイヤーカットの極意。SNSで映えるシルエット作りから撮影テクニックまで。',
