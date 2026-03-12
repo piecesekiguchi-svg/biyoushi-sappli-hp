@@ -366,6 +366,15 @@ export const INITIAL_CATEGORIES: Category[] = [
           { id: 'l1', title: 'スライドカット初級編①', url: 'https://fants.jp/feeds/1158411?openExternalBrowser=1' },
           { id: 'l2', title: 'スライドカット初級編②', url: 'https://fants.jp/feeds/1158414?openExternalBrowser=1' },
           { id: 'l3', title: 'スライドカット初級編③', url: 'https://fants.jp/feeds/1158415?openExternalBrowser=1' },
+        ],
+        additionalLessonsTitle: 'スライドカット要点まとめ',
+        additionalLessons: [
+          { id: 'al1', title: 'デザインの基本的な考え方・感性の磨き方', url: 'https://fants.jp/feeds/1169871?openExternalBrowser=1' },
+          { id: 'al2', title: 'スライドの基本的な考え方・構造について', url: 'https://fants.jp/feeds/1169872?openExternalBrowser=1' },
+          { id: 'al3', title: 'スライドをするピッチの考え方', url: 'https://fants.jp/feeds/1169874?openExternalBrowser=1' },
+          { id: 'al4', title: 'ハサミのアングルの重要性', url: 'https://fants.jp/feeds/1169876?openExternalBrowser=1' },
+          { id: 'al5', title: '毛先の扇スライド。綺麗な束間の作り方', url: 'https://fants.jp/feeds/1169878?openExternalBrowser=1' },
+          { id: 'al6', title: 'ハチ回りの厚みを取り切る裏技※ウィッグで必ず練習してください', url: 'https://fants.jp/feeds/1169881?openExternalBrowser=1' }
         ]
       }
     ]
