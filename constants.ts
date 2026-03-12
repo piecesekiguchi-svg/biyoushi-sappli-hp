@@ -21,6 +21,14 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '全てのデザインの基礎となるカット理論と、ハサミ・コームの扱い方など、美容師としての土台を作る必須カリキュラム。',
     styles: [
       {
+        id: 'matching-theory',
+        name: '似合わせ理論完全版',
+        description: 'お客様の骨格や顔型に合わせたデザイン提案のロジック。',
+        externalUrl: 'https://fants.jp/feeds/1169968?openExternalBrowser=1',
+        date: '2026.03.11',
+        points: []
+      },
+      {
         id: 'design-reading',
         name: 'デザインの読み解き方',
         description: 'スタイル写真から構造を理解し、展開図に落とし込むための分析力を養う講義。',
