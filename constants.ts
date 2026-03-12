@@ -576,6 +576,17 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '技術以外の悩み相談、経営論、そして美容師としての生き方を語り合う場。',
     styles: [
       {
+        id: 'real-izakaya-seminar',
+        name: 'リアル居酒屋セキグチセミナー',
+        description: 'リアル居酒屋セキグチセミナーの動画コンテンツ。',
+        date: '2026.03.12',
+        points: [],
+        lessons: [
+          { id: 'l1', title: 'リアル居酒屋セキグチセミナー①', url: 'https://fants.jp/feeds/1170755?openExternalBrowser=1' },
+          { id: 'l2', title: 'リアル居酒屋セキグチセミナー②', url: 'https://fants.jp/feeds/1170773?openExternalBrowser=1' }
+        ]
+      },
+      {
         id: 'izakaya-dining',
         name: '目上の人と食事に行く際の鉄則',
         description: '社会人としての振る舞いとマナー。',
