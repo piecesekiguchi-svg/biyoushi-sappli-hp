@@ -21,6 +21,14 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '全てのデザインの基礎となるカット理論と、ハサミ・コームの扱い方など、美容師としての土台を作る必須カリキュラム。',
     styles: [
       {
+        id: 'thinning-concept',
+        name: 'セニングの考え方',
+        description: 'セニングシザーを使った質感調整と毛量コントロールの基礎理論。',
+        externalUrl: 'https://fants.jp/feeds/1228429?openExternalBrowser=1',
+        date: '2026.06.19',
+        points: []
+      },
+      {
         id: 'matching-theory',
         name: '似合わせ理論完全版',
         description: 'お客様の骨格や顔型に合わせたデザイン提案のロジック。',
