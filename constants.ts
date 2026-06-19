@@ -392,6 +392,28 @@ export const INITIAL_CATEGORIES: Category[] = [
           { id: 'al5', title: '毛先の扇スライド。綺麗な束間の作り方', url: 'https://fants.jp/feeds/1169878?openExternalBrowser=1' },
           { id: 'al6', title: 'ハチ回りの厚みを取り切る裏技※ウィッグで必ず練習してください', url: 'https://fants.jp/feeds/1169881?openExternalBrowser=1' }
         ]
+      },
+      {
+        id: 'hachi-short',
+        name: 'ハチ張り攻略人頭ショート',
+        description: 'ハチが張った骨格に対するショートカットのアプローチ。前半・後半の2部構成。',
+        date: '2026.06.19',
+        points: [],
+        lessons: [
+          { id: 'l1', title: '前半', url: 'https://fants.jp/feeds/1242018?openExternalBrowser=1' },
+          { id: 'l2', title: '後半', url: 'https://fants.jp/feeds/1242019?openExternalBrowser=1' },
+        ]
+      },
+      {
+        id: 'new-medium-layer',
+        name: '新・ミディアムレイヤー',
+        description: 'ミディアムレイヤーの新しいアプローチ。前半・後半の2部構成。',
+        date: '2026.06.19',
+        points: [],
+        lessons: [
+          { id: 'l1', title: '前半', url: 'https://fants.jp/feeds/1300342?openExternalBrowser=1' },
+          { id: 'l2', title: '後半', url: 'https://fants.jp/feeds/1300343?openExternalBrowser=1' },
+        ]
       }
     ]
   },
