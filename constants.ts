@@ -21,6 +21,17 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '全てのデザインの基礎となるカット理論と、ハサミ・コームの扱い方など、美容師としての土台を作る必須カリキュラム。',
     styles: [
       {
+        id: 'blow-basics',
+        name: 'ブローの基礎知識',
+        description: 'ブローの基本的な考え方と技術。前半・後半の2部構成。',
+        date: '2026.06.19',
+        points: [],
+        lessons: [
+          { id: 'l1', title: '前半', url: 'https://fants.jp/feeds/1318017?openExternalBrowser=1' },
+          { id: 'l2', title: '後半', url: 'https://fants.jp/feeds/1318020?openExternalBrowser=1' },
+        ]
+      },
+      {
         id: 'thinning-concept',
         name: 'セニングの考え方',
         description: 'セニングシザーを使った質感調整と毛量コントロールの基礎理論。',
@@ -423,6 +434,17 @@ export const INITIAL_CATEGORIES: Category[] = [
     subtitle: 'トップスタイリストの思考',
     description: '業界を牽引する特別講師による、撮影技術やブランディングを含めた総合セミナー。',
     styles: [
+      {
+        id: 'altema-kubire-short',
+        name: 'アルテマpresents・くびれマスターショート',
+        description: 'くびれシルエットを作るショートカットの極意。前半・後半の2部構成。',
+        date: '2026.06.19',
+        points: [],
+        lessons: [
+          { id: 'l1', title: '前半', url: 'https://fants.jp/feeds/1329590?openExternalBrowser=1' },
+          { id: 'l2', title: '後半', url: 'https://fants.jp/feeds/1329593?openExternalBrowser=1' },
+        ]
+      },
       {
         id: 'hiromu-shortcut-bodymotion',
         name: 'ヴィダルサスーンアカデミー主席卒業！beep　ひろむ氏・ショートカットボディモーション',
