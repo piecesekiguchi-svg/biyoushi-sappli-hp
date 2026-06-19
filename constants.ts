@@ -628,6 +628,54 @@ export const INITIAL_CATEGORIES: Category[] = [
     description: '技術以外の悩み相談、経営論、そして美容師としての生き方を語り合う場。',
     styles: [
       {
+        id: 'plus-service-danger',
+        name: 'プラスサービスが危険な話',
+        description: '',
+        externalUrl: 'https://fants.jp/feeds/1332846?openExternalBrowser=1',
+        date: '2026.06.19',
+        points: []
+      },
+      {
+        id: 'let-go-try-harder',
+        name: '「もっと頑張らなきゃ」を手放したら、自信がついてきた',
+        description: '',
+        externalUrl: 'https://fants.jp/feeds/1334848?openExternalBrowser=1',
+        date: '2026.06.19',
+        points: []
+      },
+      {
+        id: 'positive-words-reason',
+        name: 'ポジティブな言葉を使った方がいい、本当の理由',
+        description: '',
+        externalUrl: 'https://fants.jp/feeds/1336978?openExternalBrowser=1',
+        date: '2026.06.19',
+        points: []
+      },
+      {
+        id: 'stop-finding-answers',
+        name: '正解探しをやめたら楽になった',
+        description: '',
+        externalUrl: 'https://fants.jp/feeds/1340600?openExternalBrowser=1',
+        date: '2026.06.19',
+        points: []
+      },
+      {
+        id: 'niawase-proposal',
+        name: '似合わせは、技術じゃなくて「提案力」だと思う',
+        description: '',
+        externalUrl: 'https://fants.jp/feeds/1344868?openExternalBrowser=1',
+        date: '2026.06.19',
+        points: []
+      },
+      {
+        id: 'counseling-hardest',
+        name: 'カウンセリングは「どうしますか？」が一番難しい',
+        description: '',
+        externalUrl: 'https://fants.jp/feeds/1346755?openExternalBrowser=1',
+        date: '2026.06.19',
+        points: []
+      },
+      {
         id: 'real-izakaya-seminar',
         name: 'リアル居酒屋セキグチセミナー',
         description: 'リアル居酒屋セキグチセミナーの動画コンテンツ。',
